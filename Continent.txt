@@ -1,4 +1,4 @@
-Asia, 7, Afghanistan, China, India, Irkutsk, Japan, Kamchatka, Middle East, Mongoloa, Siam, Siam, Siberia, Ural, Yakutsk
+Asia, 7, Afghanistan, China, India, Irkutsk, Japan, Kamchatka, Middle East, Mongolia, Siam, Siberia, Ural, Yakutsk
 North America, 5, Alaska, Alberta, Central America, Eastern United State, Greenland, North West Territoy, Ontario, Quebec, Western United States
 Europe, 5, Iceland, Great Britain, Northern Europe, Scandlinavia, Southern Europe, Ukraine, Western Europe
 Africa, 3, Congo, East Africa, Egypt, North Africa, Madagascar, South Africa
