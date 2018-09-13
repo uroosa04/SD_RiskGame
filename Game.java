@@ -415,22 +415,29 @@ public class Game {
 			//Australia
 			
 			ArrayList<Country> adjacentToEasternAustralia = new ArrayList<Country>() {{
-				add();
+				add(WesternAustralia);
+				add(NewGuinea);
 			}};
 			EasternAustralia.setAdjacent(adjacentToEasternAustralia);
 			
 			ArrayList<Country> adjacentToIndonesia = new ArrayList<Country>() {{
-				add();
+				add(Siam);
+				add(NewGuinea);
+				add(WesternAustralia);
 			}};
 			Indonesia.setAdjacent(adjacentToIndonesia);
 			
 			ArrayList<Country> adjacentToNewGuinea = new ArrayList<Country>() {{
-				add();
+				add(EasternAustralia);
+				add(Indonesia);
+				add(WesternAustralia);
 			}};
 			NewGuinea.setAdjacent(adjacentToNewGuinea);
 			
 			ArrayList<Country> adjacentToWesternAustralia = new ArrayList<Country>() {{
-				add();
+				add(EasternAustralia);
+				add(Indonesia);
+				add(NewGuinea);
 			}};
 			WesternAustralia.setAdjacent(adjacentToWesternAustralia);
 	}
