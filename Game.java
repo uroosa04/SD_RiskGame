@@ -22,6 +22,12 @@ public class Game {
 		
 	}
 	
+	
+	/*
+	This method initialized the board by filling the continent and country classes.
+	it fills the initialized countries into the appropriate continents, and
+	fills the adjacency lists for the countries
+	*/
 	public void initialize() {
 	////Countries by continent
 			//North America
