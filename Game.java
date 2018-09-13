@@ -18,9 +18,6 @@ public class Game {
 		
 		System.out.println("Got it, " + numberOfPlayers + " players.");
 		
-		for (int i = 1; i <= numberOfPlayers; i++) {
-			System.out.println("What is Player "+ i + " name?");
-		}
 		sc.close();
 		
 	}
