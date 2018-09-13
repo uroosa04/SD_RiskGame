@@ -102,7 +102,7 @@ public class Game {
 			Country MiddleEast = new Country("Middle East");
 			Country Mongolia = new Country("Mongolia");
 			Country Siam = new Country("Siam");
-			Country Sibaria = new Country("Sibaria");
+			Country Siberia = new Country("Sibaria");
 			Country Ural = new Country("Ural");
 			Country Yakutsk = new Country("Yakutsk");
 			ArrayList<Country> AsiaCountryList = new ArrayList<Country>() {{
@@ -115,7 +115,7 @@ public class Game {
 				add(MiddleEast);
 				add(Mongolia);
 				add(Siam);
-				add(Sibaria);
+				add(Siberia);
 				add(Ural);
 				add(Yakutsk);
 			}};
@@ -358,59 +358,106 @@ public class Game {
 			//Asia
 			
 			ArrayList<Country> adjacentToChina = new ArrayList<Country>() {{
-				add();
+				add(Siam);
+				add(India);
+				add(Ural);
+				add(Siberia);
+				add(Mongolia);
 			}};
 			China.setAdjacent(adjacentToChina);
 			
 			ArrayList<Country> adjacentToIndia = new ArrayList<Country>() {{
-				add();
+				add(Siam);
+				add(China);
+				add(MiddleEast);
+				add(Afghanistan);
 			}};
 			India.setAdjacent(adjacentToIndia);
 			
 			ArrayList<Country> adjacentToIrkutsk = new ArrayList<Country>() {{
-				add();
+				add(Mongolia);
+				add(Siberia);
+				add(Yakutsk);
+				add(Kamchatka);
 			}};
 			Irkutsk.setAdjacent(adjacentToIrkutsk);
 			
 			ArrayList<Country> adjacentToJapan = new ArrayList<Country>() {{
-				add();
+				add(Mongolia);
+				add(Kamchatka);
 			}};
 			Japan.setAdjacent(adjacentToJapan);
 			
 			ArrayList<Country> adjacentToKamchatka = new ArrayList<Country>() {{
-				add();
+				add(Japan);
+				add(Mongolia);
+				add(Irkutsk);
+				add(Yakutsk);
 			}};
 			Kamchatka.setAdjacent(adjacentToKamchatka);
 			
 			ArrayList<Country> adjacentToMiddleEast = new ArrayList<Country>() {{
-				add();
+				add(India);
+				add(Afghanistan);
+				add(Ukraine);
+				add(SouthernEurope);
+				add(Egypt);
 			}};
 			MiddleEast.setAdjacent(adjacentToMiddleEast);
 			
 			ArrayList<Country> adjacentToMongolia = new ArrayList<Country>() {{
-				add();
+				add(Japan);
+				add(China);
+				add(Siberia);
+				add(Irkutsk);
+				add(Kamchatka);
 			}};
 			Mongolia.setAdjacent(adjacentToMongolia);
 			
 			ArrayList<Country> adjacentToSiam = new ArrayList<Country>() {{
-				add();
+				add(China);
+				add(India);
+				add(Indonesia);
 			}};
 			Siam.setAdjacent(adjacentToSiam);
 			
-			ArrayList<Country> adjacentToSibaria = new ArrayList<Country>() {{
-				add();
+			ArrayList<Country> adjacentToSiberia = new ArrayList<Country>() {{
+				add(Ural);
+				add(China);
+				add(Mongolia);
+				add(Irkutsk);
+				add(Yakutsk);
+				
 			}};
-			Sibaria.setAdjacent(adjacentToSibaria);
+			Siberia.setAdjacent(adjacentToSiberia);
 			
 			ArrayList<Country> adjacentToUral = new ArrayList<Country>() {{
-				add();
+				add(Ural);
+				add(Afghanistan);
+				add(China);
+				add(Mongolia);
+				add(Irkutsk);
+				add(Yakutsk);
 			}};
 			Ural.setAdjacent(adjacentToUral);
 			
 			ArrayList<Country> adjacentToYakutsk = new ArrayList<Country>() {{
-				add();
+				add(Siberia);
+				add(Irkutsk);
+				add(Kamchatka);
 			}};
 			Yakutsk.setAdjacent(adjacentToYakutsk);
+			
+			ArrayList<Country> adjacentToAfghanistan = new ArrayList<Country>() {{
+				add(MiddleEast);
+				add(India);
+				add(China);
+				add(Ural);
+				add(Ukraine);
+			}};
+			
+			Afghanistan.setAdjacent(adjacentToAfghanistan);
+			
 			
 			//Australia
 			
