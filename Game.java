@@ -20,10 +20,6 @@ public class Game {
 		
 		System.out.println("What is Player 1's name?");
 		
-		
-		InitializeBoard Risk = new InitializeBoard();
-		
-		Risk.initialize();
 	}
 	
 	public void initialize() {
