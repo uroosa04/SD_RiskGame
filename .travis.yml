@@ -2,7 +2,3 @@ language: java
 jkd:
   -oraclejdk8
 
-before-script:
-
-install: true
-script: ./mvnw clean install
