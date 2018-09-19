@@ -3,9 +3,9 @@ public class Card {
 	private int army;
 	private Country country;
 	
-	public Card(int army, String string) {
+	public Card(int army, Country country) {
 		this.army = army;
-		this.country = string;
+		this.country = country;
 	}
 	
 	public Country getCountry() {
