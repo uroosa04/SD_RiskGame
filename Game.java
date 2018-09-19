@@ -477,8 +477,14 @@ public class Game {
 		//Cards and Deck (Not Done)
 		
 		List<Card> cardList = new ArrayList<Card>();
-		cardList.add(new Card(5,"Afghanistan"));
-		//one for each country. look up rick cards online
+		cardList.add(new Card("Artillery", Afghanistan));
+		cardList.add(new Card("Infantry", Alaska));
+		cardList.add(new Card("Cavalry", Alberta));
+		cardList.add(new Card("Infantry", Argentina));
+		cardList.add(new Card("Artillery", Brazil));
+		
+		
+		//one for each country. look up risk cards online
 		
 		///////////////////////////////////////////////////////////////////////////////////
 		/////////
@@ -548,10 +554,7 @@ public class Game {
 		
 	}
 	
-	
-	/*
-	This method initialized the board by filling the continent and country classes.
-	it fills the initialized countries into the appropriate continents, and
-	fills the adjacency lists for the countries
-	*/
+	public void initialize () {
+		
+	}
 }
