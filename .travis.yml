@@ -1,5 +1,6 @@
 language: java
 jkd:
   -oraclejdk8
- script: mvn clean install
+  -oraclejdk7
+
 
