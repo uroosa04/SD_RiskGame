@@ -497,14 +497,14 @@ public class Game {
 		
 		
 		
+		//Everything has been initialized and now the game is ready to start
+		Scanner sc = new Scanner(System.in); //Scanner to read players input.
+		int numberOfPlayers; //Stores the total number of players
+		int counter; //Helper variable for loops
+		List<Player> playerList = new ArrayList<Player>(); //Array list with players name in turn order
+		int totalNumberOfArmyPerPlayer = 0; //The number of armies per player decided by game rules and total players
 		
-		Scanner sc = new Scanner(System.in);
-		int numberOfPlayers;
-		int counter;
-		List<Player> playerList = new ArrayList<Player>();
-		int totalNumberOfArmyPerPlayer = 0;
-		
-		
+		//Game starts and asks the amount of players
 		System.out.println("Welcome to RISK!");
 		System.out.println("How many players? (2, 3, 4, 5, or 6)");
 		numberOfPlayers = sc.nextInt();
@@ -513,6 +513,8 @@ public class Game {
 			numberOfPlayers = sc.nextInt() ;
 		}
 		
+		//Sets the total number of armies available for each player according to numberOfPlayers
+		//This numbers are set by the game rules
 		switch(numberOfPlayers) {
 	        case 2 :
 	        	totalNumberOfArmyPerPlayer = 40;
@@ -530,31 +532,94 @@ public class Game {
 	            break;
 		}
 		
+		//Asks the name of all players and creates Player instances for each
 		System.out.println("Got it, " + numberOfPlayers + " players.");
-		String[] playerNameArray = new String[numberOfPlayers];
-		
+		System.out.println("Please provide player names in turn order.");
+		String name;
 		sc.reset();
 		counter = 0;
 		while (sc.hasNextLine()) {
 			System.out.println("What Player " + (counter+1) + "s name?");
-			playerNameArray[counter] = sc.next();
+			name = sc.next();
+			playerList.add(new Player(name,totalNumberOfArmyPerPlayer));
 			counter++;
 			if (counter == numberOfPlayers) {
 				break;
 			}
 		}
 		
-		for (int x = 0 ; x < numberOfPlayers ; x++) {
-			playerList.add(new Player(String.valueOf(playerNameArray[x]), totalNumberOfArmyPerPlayer));
-		}
 		
-		System.out.println();
+		
+		
+		
+		
+		//The game starts for the players, as the rules dictate,
+		//they place one army in open countries until they are all taken
+		
+		System.out.println("Let's begin!");
+		System.out.println("To start, all players most place one army in a country"
+				+ "\nuntil the board is filled in turns.");
+		
+		System.out.println("\n" + playerList.get(0).getName() + ", it's your turn!");
+		System.out.println("\nAvailable countries are: ");
+		System.out.println("\nNorth America:");
+		printUnownedCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+		System.out.println("\nType the country's name to place an army");
+		sc.reset();
+		String choice;
+		choice = sc.nextLine();
+		while (choice =! )
+		
+		
 		
 		sc.close();
 		
 	}
 	
-	public void initialize () {
-		
+	public void initialArmyPlacement(Player name, Country country) {
+		name.decreaseArmy(1);
+		name.addCountry(country);
+		country.setOwner(name);
+		country.increaseArmy(1);
+	}
+	
+	public static void printUnownedCountries(Continent continent1, Continent continent2, Continent continent3, 
+			Continent continent4, Continent continent5, Continent continent6) {
+		System.out.println("\nNorth America:");
+		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
+			if (continent1.getCountries().get(x).hasPlayer() == false) {
+				System.out.println(continent1.getCountries().get(x).getName());
+			}
+		}
+		System.out.println("\nSouthAmerica:");
+		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
+			if (continent2.getCountries().get(x).hasPlayer() == false) {
+				System.out.println(continent2.getCountries().get(x).getName());
+			}
+		}
+		System.out.println("\nEurope:");
+		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
+			if (continent3.getCountries().get(x).hasPlayer() == false) {
+				System.out.println(continent3.getCountries().get(x).getName());
+			}
+		}
+		System.out.println("\nAfrica:");
+		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
+			if (continent4.getCountries().get(x).hasPlayer() == false) {
+				System.out.println(continent4.getCountries().get(x).getName());
+			}
+		}
+		System.out.println("\nAsia:");
+		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
+			if (continent5.getCountries().get(x).hasPlayer() == false) {
+				System.out.println(continent5.getCountries().get(x).getName());
+			}
+		}
+		System.out.println("\nAustralia:");
+		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
+			if (continent6.getCountries().get(x).hasPlayer() == false) {
+				System.out.println(continent6.getCountries().get(x).getName());
+			}
+		}
 	}
 }

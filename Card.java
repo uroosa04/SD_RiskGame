@@ -23,6 +23,21 @@ public class Card {
 	//At the beginning of subsequent turns, 
 	//you may trade in matched sets of cards and take additional armies 
 	//based on the total number of sets anyone has traded in so far.
+	//
+	//At the beginning of subsequent turns, you may trade in matched sets of cards 
+	//and take additional armies based on the total number of sets anyone has traded in so far.
+	//     First set traded in -- 4 armies
+	//     Second set traded in -- 6 armies
+	//     Third set traded in -- 8 armies
+	//     Fourth set traded in -- 10 armies
+	//     Fifth set traded in -- 12 armies
+	//     Sixth set traded in -- 15 armies
+	//     Seventh and up 20+5(n-7) (n being the number of trade ins)
+	//
+	//Occupied territories: If any of the 3 cards you trade in shows the picture of a territory you occupy, 
+	//you receive 2 extra armies, even if there are multiple matches, only two extra armies. 
+	//You must place both those armies onto that particular territory.
+	
 	
 	private String type; // This is type of card (Infantry, Cavalry, or Artillery).
 	private Country country; // One card per country.
@@ -36,7 +51,7 @@ public class Card {
 		return country;
 	}
 	
-	public int getType() {
-		return army;
+	public String getType() {
+		return type;
 	}
 }
