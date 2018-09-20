@@ -41,7 +41,7 @@ public class Card {
 	
 	private String type; // This is type of card (Infantry, Cavalry, or Artillery).
 	private Country country; // One card per country.
-	
+		
 	public Card(String type, Country country) {
 		this.type = type;
 		this.country = country;

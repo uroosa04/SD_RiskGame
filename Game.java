@@ -568,7 +568,7 @@ public class Game {
 		sc.reset();
 		String choice;
 		choice = sc.nextLine();
-		while (choice =! )
+		
 		
 		
 		
