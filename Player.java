@@ -29,4 +29,8 @@ public class Player {
 	public void subtractCountry(Country country) {
 		countriesHeld.remove(country);
 	}
+	
+	public int getArmy() {
+		return army;
+	}
 }

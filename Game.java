@@ -106,9 +106,9 @@ public class Game {
 			add(Yakutsk);
 		}};
 		//Australia
-		Country EasternAustralia = new Country("Easter Australia");
+		Country EasternAustralia = new Country("Eastern Australia");
 		Country Indonesia = new Country("Indonesia");
-		Country NewGuinea = new Country("NewGuinea");
+		Country NewGuinea = new Country("New Guinea");
 		Country WesternAustralia = new Country("Western Australia");
 		ArrayList<Country> AustraliaCountryList = new ArrayList<Country>() {{
 			add(EasternAustralia);
@@ -119,10 +119,10 @@ public class Game {
 				
 		////Continents
 		Continent NorthAmerica = new Continent ("North America", 5, NorthAmericaCountryList);
-		Continent SouthAmerica = new Continent ("North America", 2, SouthAmericaCountryList);
-		Continent Europe = new Continent ("North America", 5, EuropeCountryList);
-		Continent Africa = new Continent ("North America", 3, AfricaCountryList);
-		Continent Asia = new Continent ("North America", 7, AsiaCountryList);
+		Continent SouthAmerica = new Continent ("South America", 2, SouthAmericaCountryList);
+		Continent Europe = new Continent ("Europe", 5, EuropeCountryList);
+		Continent Africa = new Continent ("Africa", 3, AfricaCountryList);
+		Continent Asia = new Continent ("Asia", 7, AsiaCountryList);
 		Continent Australia = new Continent ("Australia", 2, AustraliaCountryList);
 		
 		////Adjacency lists
@@ -521,6 +521,7 @@ public class Game {
 	           break;
 	        case 3 :
 	        	totalNumberOfArmyPerPlayer = 35;
+	        	break;
 	        case 4 :
 	        	totalNumberOfArmyPerPlayer = 30;
 	           break;
@@ -534,6 +535,7 @@ public class Game {
 		
 		//Asks the name of all players and creates Player instances for each
 		System.out.println("Got it, " + numberOfPlayers + " players.");
+		System.out.println("Everyone gets "+ totalNumberOfArmyPerPlayer + " armies.");
 		System.out.println("Please provide player names in turn order.");
 		String name;
 		sc.reset();
@@ -550,17 +552,17 @@ public class Game {
 		
 		//The game starts for the players, as the rules dictate,
 		//they place one army in open countries until they are all taken
+		
+		int indexHelper = 0;
 		Country selectedCountry;
 		System.out.println("Let's begin!");
 		System.out.println("To start, all players most place one army in a country"
 				+ "\nuntil the board is filled in turns.");
-		
-		
-		
 		for (int x=0 ; x < numberOfPlayers ; x++) {
-			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!");
-			System.out.println("\nAvailable countries are: ");
-			printUnownedCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!"
+					+ " \nYou have " + playerList.get(x).getArmy() + " armies left.");
+			System.out.println("\nCountries are: ");
+			printCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 			System.out.println("\nType the country's name to place an army");
 			while (true) {
 				selectedCountry = askPlayerForCountry(sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
@@ -568,23 +570,95 @@ public class Game {
 					break;
 				}
 				if (selectedCountry.hasPlayer() == true) {
-					System.out.println("That country alreasy has an owner, try again.");
+					System.out.println("That country already has an army, try again.");
 				}
 			}
 			initialArmyPlacement(playerList.get(x), selectedCountry);
-			System.out.println(x + " " + (numberOfPlayers-1));
+			if (allCountriesOwned(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia) == true) {
+				if (x == numberOfPlayers - 1) {
+					indexHelper = 0;
+				}
+				else {
+					indexHelper = x+1;
+				}
+				x = numberOfPlayers;
+			}
 			if (x == numberOfPlayers - 1) {
 				x = -1;
 			}
 		}
 		
+		//Every country now had an army.
+		//After all 42 territories are claimed, each player in turn places one additional 
+		//army onto any territory he or she already occupies.
+		
+		System.out.println("\nAll countries now have an army. Place your remaining armies in countries you own.");
+		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
+			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!"
+					+ " \nYou have " + playerList.get(x).getArmy() + " armies left.");
+			System.out.println("\nCountries are: ");
+			printCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+			System.out.println("\nType the country's name to place an army");
+			while (true) {
+				selectedCountry = askPlayerForCountry(sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+				if (selectedCountry.getOwner() == playerList.get(x)) {
+					break;
+				}
+				if (selectedCountry.hasPlayer() == true) {
+					System.out.println("That country is not yours, try again.");
+				}
+			}
+			initialArmyPlacement(playerList.get(x), selectedCountry);
+			if (playerList.get(numberOfPlayers-1).getArmy() == 0) {
+				x = numberOfPlayers;
+			}
+			if (x == numberOfPlayers - 1) {
+				x = -1;
+			}
+		}
+		
+		//All armies have been placed and its time to start the game
 		
 		
 		
-		
-		
+		/////
 		sc.close();
-		
+	}
+	
+	public static boolean allCountriesOwned (Continent continent1, Continent continent2, Continent continent3, 
+			Continent continent4, Continent continent5, Continent continent6) {
+		boolean allOwned = true;
+		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
+			if (!continent1.getCountries().get(x).hasPlayer()) {
+				allOwned = false;
+			}
+		}
+		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
+			if (!continent2.getCountries().get(x).hasPlayer()) {
+				allOwned = false;
+			}
+		}
+		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
+			if (!continent3.getCountries().get(x).hasPlayer()) {
+				allOwned = false;
+			}
+		}
+		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
+			if (!continent4.getCountries().get(x).hasPlayer()) {
+				allOwned = false;
+			}
+		}
+		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
+			if (!continent5.getCountries().get(x).hasPlayer()) {
+				allOwned = false;
+			}
+		}
+		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
+			if (!continent6.getCountries().get(x).hasPlayer()) {
+				allOwned = false;
+			}
+		}
+		return allOwned;
 	}
 	
 	
@@ -606,37 +680,37 @@ public class Game {
 		while (true) {
 			String line = input.nextLine();
 			for (int x=0 ; x < continent1.getCountries().size() ; x++) {
-				if (line.equals(continent1.getCountries().get(x).getName())) {
+				if (line.toLowerCase().equals(continent1.getCountries().get(x).getName().toLowerCase())) {
 					country = continent1.getCountries().get(x);
 					return country;
 				}
 			}
 			for (int x=0 ; x < continent2.getCountries().size() ; x++) {
-				if (line.equals(continent2.getCountries().get(x).getName())) {
+				if (line.toLowerCase().equals(continent2.getCountries().get(x).getName().toLowerCase())) {
 					country = continent2.getCountries().get(x);
 					return country;
 				}
 			}
 			for (int x=0 ; x < continent3.getCountries().size() ; x++) {
-				if (line.equals(continent3.getCountries().get(x).getName())) {
+				if (line.toLowerCase().equals(continent3.getCountries().get(x).getName().toLowerCase())) {
 					country = continent3.getCountries().get(x);
 					return country;
 				}
 			}
 			for (int x=0 ; x < continent4.getCountries().size() ; x++) {
-				if (line.equals(continent4.getCountries().get(x).getName())) {
+				if (line.toLowerCase().equals(continent4.getCountries().get(x).getName().toLowerCase())) {
 					country = continent4.getCountries().get(x);
 					return country;
 				}
 			}
 			for (int x=0 ; x < continent5.getCountries().size() ; x++) {
-				if (line.equals(continent5.getCountries().get(x).getName())) {
+				if (line.toLowerCase().equals(continent5.getCountries().get(x).getName().toLowerCase())) {
 					country = continent5.getCountries().get(x);
 					return country;
 				}
 			}
 			for (int x=0 ; x < continent6.getCountries().size() ; x++) {
-				if (line.equals(continent6.getCountries().get(x).getName())) {
+				if (line.toLowerCase().equals(continent6.getCountries().get(x).getName().toLowerCase())) {
 					country = continent6.getCountries().get(x);
 					return country;
 				}
@@ -655,43 +729,73 @@ public class Game {
 		country.increaseArmy(1);
 	}
 	
-	public static void printUnownedCountries(Continent continent1, Continent continent2, Continent continent3, 
+	public static void printCountries(Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		
 		System.out.println("\nNorth America:");
 		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
 			if (continent1.getCountries().get(x).hasPlayer() == false) {
-				System.out.println(continent1.getCountries().get(x).getName());
+				System.out.println(continent1.getCountries().get(x).getName() + "- Unowned");
+			}
+			if (continent1.getCountries().get(x).hasPlayer() == true) {
+				System.out.println(continent1.getCountries().get(x).getName() + 
+						" -Owned by " + continent1.getCountries().get(x).getOwner().getName()
+						+ " with " + continent1.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("\nSouthAmerica:");
 		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
 			if (continent2.getCountries().get(x).hasPlayer() == false) {
-				System.out.println(continent2.getCountries().get(x).getName());
+				System.out.println(continent2.getCountries().get(x).getName() + "- Unowned");
+			}
+			if (continent2.getCountries().get(x).hasPlayer() == true) {
+				System.out.println(continent2.getCountries().get(x).getName() + 
+						" -Owned by " + continent2.getCountries().get(x).getOwner().getName()
+						+ " with " + continent2.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("\nEurope:");
 		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
 			if (continent3.getCountries().get(x).hasPlayer() == false) {
-				System.out.println(continent3.getCountries().get(x).getName());
+				System.out.println(continent3.getCountries().get(x).getName() + "- Unowned");
+			}
+			if (continent3.getCountries().get(x).hasPlayer() == true) {
+				System.out.println(continent3.getCountries().get(x).getName() + 
+						" -Owned by " + continent3.getCountries().get(x).getOwner().getName()
+						+ " with " + continent3.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("\nAfrica:");
 		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
 			if (continent4.getCountries().get(x).hasPlayer() == false) {
-				System.out.println(continent4.getCountries().get(x).getName());
+				System.out.println(continent4.getCountries().get(x).getName() + "- Unowned");
+			}
+			if (continent4.getCountries().get(x).hasPlayer() == true) {
+				System.out.println(continent4.getCountries().get(x).getName() + 
+						" -Owned by " + continent4.getCountries().get(x).getOwner().getName()
+						+ " with " + continent4.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("\nAsia:");
 		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
 			if (continent5.getCountries().get(x).hasPlayer() == false) {
-				System.out.println(continent5.getCountries().get(x).getName());
+				System.out.println(continent5.getCountries().get(x).getName() + "- Unowned");
+			}
+			if (continent5.getCountries().get(x).hasPlayer() == true) {
+				System.out.println(continent5.getCountries().get(x).getName() + 
+						" -Owned by " + continent5.getCountries().get(x).getOwner().getName()
+						+ " with " + continent5.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("\nAustralia:");
 		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
 			if (continent6.getCountries().get(x).hasPlayer() == false) {
-				System.out.println(continent6.getCountries().get(x).getName());
+				System.out.println(continent6.getCountries().get(x).getName() + "- Unowned");
+			}
+			if (continent6.getCountries().get(x).hasPlayer() == true) {
+				System.out.println(continent6.getCountries().get(x).getName() + 
+						" -Owned by " + continent6.getCountries().get(x).getOwner().getName()
+						+ " with " + continent6.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 	}
