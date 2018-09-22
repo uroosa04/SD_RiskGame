@@ -507,10 +507,10 @@ public class Game {
 		//Game starts and asks the amount of players
 		System.out.println("Welcome to RISK!");
 		System.out.println("How many players? (2, 3, 4, 5, or 6)");
-		numberOfPlayers = sc.nextInt();
+		numberOfPlayers = askPlayerForInt(sc);
 		while (numberOfPlayers < 2 || numberOfPlayers > 6) {
 			System.out.println("Please input an appropiate number of players. (2, 3, 4, 5, or 6)");
-			numberOfPlayers = sc.nextInt() ;
+			numberOfPlayers = askPlayerForInt(sc);
 		}
 		
 		//Sets the total number of armies available for each player according to numberOfPlayers
@@ -548,26 +548,37 @@ public class Game {
 			}
 		}
 		
-		
-		
-		
-		
-		
 		//The game starts for the players, as the rules dictate,
 		//they place one army in open countries until they are all taken
-		
+		Country selectedCountry;
 		System.out.println("Let's begin!");
 		System.out.println("To start, all players most place one army in a country"
 				+ "\nuntil the board is filled in turns.");
 		
-		System.out.println("\n" + playerList.get(0).getName() + ", it's your turn!");
-		System.out.println("\nAvailable countries are: ");
-		System.out.println("\nNorth America:");
-		printUnownedCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
-		System.out.println("\nType the country's name to place an army");
-		sc.reset();
-		String choice;
-		choice = sc.nextLine();
+		
+		
+		for (int x=0 ; x < numberOfPlayers ; x++) {
+			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!");
+			System.out.println("\nAvailable countries are: ");
+			printUnownedCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+			System.out.println("\nType the country's name to place an army");
+			while (true) {
+				selectedCountry = askPlayerForCountry(sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+				if (selectedCountry.hasPlayer() == false) {
+					break;
+				}
+				if (selectedCountry.hasPlayer() == true) {
+					System.out.println("That country alreasy has an owner, try again.");
+				}
+			}
+			initialArmyPlacement(playerList.get(x), selectedCountry);
+			System.out.println(x + " " + (numberOfPlayers-1));
+			if (x == numberOfPlayers - 1) {
+				x = -1;
+			}
+		}
+		
+		
 		
 		
 		
@@ -576,7 +587,68 @@ public class Game {
 		
 	}
 	
-	public void initialArmyPlacement(Player name, Country country) {
+	
+	public static int askPlayerForInt(Scanner input) {
+		input.reset();
+		while(!input.hasNextInt()) {
+		    input.next();
+		    System.out.println("Invalid input, please try again");
+		}
+		int number = input.nextInt();
+		return number;
+	}
+	
+	public static Country askPlayerForCountry (Scanner input, Continent continent1, Continent continent2, Continent continent3, 
+			Continent continent4, Continent continent5, Continent continent6) {
+		Country country = null;
+		boolean matched = false;
+		int first =  1;
+		while (true) {
+			String line = input.nextLine();
+			for (int x=0 ; x < continent1.getCountries().size() ; x++) {
+				if (line.equals(continent1.getCountries().get(x).getName())) {
+					country = continent1.getCountries().get(x);
+					return country;
+				}
+			}
+			for (int x=0 ; x < continent2.getCountries().size() ; x++) {
+				if (line.equals(continent2.getCountries().get(x).getName())) {
+					country = continent2.getCountries().get(x);
+					return country;
+				}
+			}
+			for (int x=0 ; x < continent3.getCountries().size() ; x++) {
+				if (line.equals(continent3.getCountries().get(x).getName())) {
+					country = continent3.getCountries().get(x);
+					return country;
+				}
+			}
+			for (int x=0 ; x < continent4.getCountries().size() ; x++) {
+				if (line.equals(continent4.getCountries().get(x).getName())) {
+					country = continent4.getCountries().get(x);
+					return country;
+				}
+			}
+			for (int x=0 ; x < continent5.getCountries().size() ; x++) {
+				if (line.equals(continent5.getCountries().get(x).getName())) {
+					country = continent5.getCountries().get(x);
+					return country;
+				}
+			}
+			for (int x=0 ; x < continent6.getCountries().size() ; x++) {
+				if (line.equals(continent6.getCountries().get(x).getName())) {
+					country = continent6.getCountries().get(x);
+					return country;
+				}
+			}
+			if (matched == false && first > 1) {
+				System.out.println("Invalid input, please try again");
+			}
+			first++;
+		}
+	}
+	
+	public static void initialArmyPlacement(Player name, Country country) {
 		name.decreaseArmy(1);
 		name.addCountry(country);
 		country.setOwner(name);
@@ -585,6 +657,7 @@ public class Game {
 	
 	public static void printUnownedCountries(Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
+		
 		System.out.println("\nNorth America:");
 		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
 			if (continent1.getCountries().get(x).hasPlayer() == false) {

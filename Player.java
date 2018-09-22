@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Player {
 	private String name;
 	private int army;
-	private ArrayList<Country> countriesHeld;
+	private ArrayList<Country> countriesHeld = new ArrayList<Country>();
 	
 	public Player(String name, int army) {
 		this.name = name;
