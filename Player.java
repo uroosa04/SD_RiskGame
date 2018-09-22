@@ -33,4 +33,8 @@ public class Player {
 	public int getArmy() {
 		return army;
 	}
+	
+	public ArrayList<Country> getCountries(){
+		return countriesHeld;
+	}
 }

@@ -619,10 +619,33 @@ public class Game {
 		
 		//All armies have been placed and its time to start the game
 		
-		
+		System.out.println("\nTime to start the game!");
+		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
+			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!");
+			
+			//Getting and placing new armies
+			//Attacking
+			//Fortifying your position
+			
+			//Getting new armies
+			int newArmies = getNewArmies(playerList.get(x));
+			
+			if (playerList.get(x).getCountries().size() == 42) {
+				x = numberOfPlayers;
+				System.out.println("Congratulations " + playerList.get(x).getName() + ", you won the game!");
+			}
+			if (x == numberOfPlayers - 1) {
+				x = -1;
+			}
+		}
 		
 		/////
 		sc.close();
+	}
+	
+	public static int getNewArmies(Player player) {
+		int total = 0;
+		total = player.getCountries().size()
 	}
 	
 	public static boolean allCountriesOwned (Continent continent1, Continent continent2, Continent continent3, 
