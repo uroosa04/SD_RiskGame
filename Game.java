@@ -504,6 +504,7 @@ public class Game {
 		List<Player> playerList = new ArrayList<Player>(); //Array list with players name in turn order
 		int totalNumberOfArmyPerPlayer = 0; //The number of armies per player decided by game rules and total players
 		
+		
 		//Game starts and asks the amount of players
 		System.out.println("Welcome to RISK!");
 		System.out.println("How many players? (2, 3, 4, 5, or 6)");
@@ -549,6 +550,24 @@ public class Game {
 				break;
 			}
 		}
+		
+		initialArmyPlacement(playerList.get(0), Alaska);
+		//initialArmyPlacement(playerList.get(0), Alberta);
+		initialArmyPlacement(playerList.get(0), CentralAmerica);
+		initialArmyPlacement(playerList.get(0), EasternUnitedStates);
+		initialArmyPlacement(playerList.get(0), Greenland);
+		initialArmyPlacement(playerList.get(0), NorthwestTerritory);
+		initialArmyPlacement(playerList.get(0), Ontario);
+		initialArmyPlacement(playerList.get(0), Quebec);
+		initialArmyPlacement(playerList.get(0), WesternUnitedStates);
+		initialArmyPlacement(playerList.get(0), Venezuela);
+		initialArmyPlacement(playerList.get(0), Brazil);
+		initialArmyPlacement(playerList.get(0), Peru);
+		initialArmyPlacement(playerList.get(0), Argentina);
+		int newArmies = getNewArmies(playerList.get(0),NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+		System.out.println(newArmies);
+		
+		/*
 		
 		//The game starts for the players, as the rules dictate,
 		//they place one army in open countries until they are all taken
@@ -628,7 +647,7 @@ public class Game {
 			//Fortifying your position
 			
 			//Getting new armies
-			int newArmies = getNewArmies(playerList.get(x));
+			int newArmies = getNewArmies(playerList.get(x),NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 			
 			if (playerList.get(x).getCountries().size() == 42) {
 				x = numberOfPlayers;
@@ -640,12 +659,76 @@ public class Game {
 		}
 		
 		/////
+		 */
 		sc.close();
 	}
 	
-	public static int getNewArmies(Player player) {
+	public static int getNewArmies(Player player, Continent continent1, Continent continent2, Continent continent3, 
+			Continent continent4, Continent continent5, Continent continent6) {
 		int total = 0;
-		total = player.getCountries().size()
+		
+		total = player.getCountries().size()/3;
+		
+		boolean continentOwned = true;
+		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
+			if (continent1.getCountries().get(x).getOwner() != player) {
+				continentOwned = false;
+			}
+		}
+		System.out.println(continentOwned);
+		System.out.println(total);
+		if (continentOwned = true) {
+			total = total + 5;
+		}
+		/*continentOwned = true;
+		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
+			if (!(continent2.getCountries().get(x).getOwner() == player)) {
+				continentOwned = false;
+			}
+		}
+		if (continentOwned = true) {
+			total = total + 2;
+		}
+		continentOwned = true;
+		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
+			if (!(continent3.getCountries().get(x).getOwner() == player)) {
+				continentOwned = false;
+			}
+		}
+		if (continentOwned = true) {
+			total = total + 5;
+		}
+		continentOwned = true;
+		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
+			if (!(continent4.getCountries().get(x).getOwner() == player)) {
+				continentOwned = false;
+			}
+		}
+		if (continentOwned = true) {
+			total = total + 3;
+		}
+		continentOwned = true;
+		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
+			if (!(continent5.getCountries().get(x).getOwner() == player)) {
+				continentOwned = false;
+			}
+		}
+		if (continentOwned = true) {
+			total = total + 7;
+		}
+		continentOwned = true;
+		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
+			if (!(continent6.getCountries().get(x).getOwner() == player)) {
+				continentOwned = false;
+			}
+		}
+		if (continentOwned = true) {
+			total = total + 2;
+		}*/
+
+		//cards
+		
+		return total;
 	}
 	
 	public static boolean allCountriesOwned (Continent continent1, Continent continent2, Continent continent3, 
