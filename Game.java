@@ -13,6 +13,7 @@ public class Game {
 		///////    Creates cards and loads them into the deck (not done yet)
 		///////////////////////////////////////////////////////////////////////////////////
 		
+		//Country for wild card
 		
 		//North America
 		Country Alaska = new Country("Alaska");
@@ -474,17 +475,54 @@ public class Game {
 		}};
 		WesternAustralia.setAdjacent(adjacentToWesternAustralia);
 		
-		//Cards and Deck (Not Done)
+		//Cards and Deck
 		
 		List<Card> cardList = new ArrayList<Card>();
+		cardList.add(new Card("Wild Card", null));
+		cardList.add(new Card("Wild Card", null));
 		cardList.add(new Card("Artillery", Afghanistan));
 		cardList.add(new Card("Infantry", Alaska));
 		cardList.add(new Card("Cavalry", Alberta));
 		cardList.add(new Card("Infantry", Argentina));
 		cardList.add(new Card("Artillery", Brazil));
+		cardList.add(new Card("Infantry", Congo));
+		cardList.add(new Card("Artillery", CentralAmerica));
+		cardList.add(new Card("Infantry", China));
+		cardList.add(new Card("Infantry", EastAfrica));
+		cardList.add(new Card("Artillery", EasternAustralia));
+		cardList.add(new Card("Cavalry", Quebec));
+		cardList.add(new Card("Infantry", Egypt));
+		cardList.add(new Card("Artillery", EasternUnitedStates));
+		cardList.add(new Card("Artillery", GreatBritain));
+		cardList.add(new Card("Cavalry", Greenland));
+		cardList.add(new Card("Infantry", Iceland));
+		cardList.add(new Card("Cavalry", India));
+		cardList.add(new Card("Artillery", Indonesia));
+		cardList.add(new Card("Cavalry", Irkutsk));
+		cardList.add(new Card("Artillery", Japan));
+		cardList.add(new Card("Infantry", Kamchatka));
+		cardList.add(new Card("Cavalry", Madagascar));
+		cardList.add(new Card("Infantry", MiddleEast));
+		cardList.add(new Card("Infantry", Mongolia));
+		cardList.add(new Card("Infantry", NewGuinea));
+		cardList.add(new Card("Cavalry", NorthAfrica));
+		cardList.add(new Card("Artillery", NorthernEurope));
+		cardList.add(new Card("Artillery", NorthwestTerritory));
+		cardList.add(new Card("Cavalry", Ontario));
+		cardList.add(new Card("Infantry", Peru));
+		cardList.add(new Card("Cavalry", Ukraine));
+		cardList.add(new Card("Cavalry", Scandinavia));
+		cardList.add(new Card("Cavalry", Siberia));
+		cardList.add(new Card("Artillery", SouthAfrica));
+		cardList.add(new Card("Infantry", Siam));
+		cardList.add(new Card("Artillery", SouthernEurope));
+		cardList.add(new Card("Cavalry", Ural));
+		cardList.add(new Card("Infantry", Venezuela));
+		cardList.add(new Card("Artillery", WesternAustralia));
+		cardList.add(new Card("Artillery", WesternEurope));
+		cardList.add(new Card("Artillery", WesternUnitedStates));
+		cardList.add(new Card("Cavalry", Yakutsk));
 		
-		
-		//one for each country. look up risk cards online
 		
 		///////////////////////////////////////////////////////////////////////////////////
 		/////////
@@ -551,8 +589,9 @@ public class Game {
 			}
 		}
 		
-		initialArmyPlacement(playerList.get(0), Alaska);
-		//initialArmyPlacement(playerList.get(0), Alberta);
+		//testing
+		//initialArmyPlacement(playerList.get(0), Alaska);
+		initialArmyPlacement(playerList.get(0), Alberta);
 		initialArmyPlacement(playerList.get(0), CentralAmerica);
 		initialArmyPlacement(playerList.get(0), EasternUnitedStates);
 		initialArmyPlacement(playerList.get(0), Greenland);
@@ -560,13 +599,15 @@ public class Game {
 		initialArmyPlacement(playerList.get(0), Ontario);
 		initialArmyPlacement(playerList.get(0), Quebec);
 		initialArmyPlacement(playerList.get(0), WesternUnitedStates);
-		initialArmyPlacement(playerList.get(0), Venezuela);
-		initialArmyPlacement(playerList.get(0), Brazil);
-		initialArmyPlacement(playerList.get(0), Peru);
-		initialArmyPlacement(playerList.get(0), Argentina);
-		int newArmies = getNewArmies(playerList.get(0),NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
-		System.out.println(newArmies);
 		
+		//System.out.println(getNewArmies(playerList.get(0), NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia));
+		System.out.println(cardList.get(0).getType());
+		givePlayerRandomCard(playerList.get(0), cardList);
+		//System.out.println(playerList.get(0).getCards().get(0).getCountry().getName() + "\n");
+		
+		//for (int x=0 ; x < cardList.size() ; x++) {
+		//	System.out.println(cardList.get(x).getCountry().getName());
+		//}
 		/*
 		
 		//The game starts for the players, as the rules dictate,
@@ -663,6 +704,12 @@ public class Game {
 		sc.close();
 	}
 	
+	public static void givePlayerRandomCard(Player player, List<Card> list) {
+		int r = (int) (Math.random() * list.size());
+		player.addCard(list.get(r));
+		list.remove(r);
+	}
+	
 	public static int getNewArmies(Player player, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		int total = 0;
@@ -675,18 +722,16 @@ public class Game {
 				continentOwned = false;
 			}
 		}
-		System.out.println(continentOwned);
-		System.out.println(total);
-		if (continentOwned = true) {
+		if (continentOwned == true) {
 			total = total + 5;
 		}
-		/*continentOwned = true;
+		continentOwned = true;
 		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
 			if (!(continent2.getCountries().get(x).getOwner() == player)) {
 				continentOwned = false;
 			}
 		}
-		if (continentOwned = true) {
+		if (continentOwned == true) {
 			total = total + 2;
 		}
 		continentOwned = true;
@@ -695,7 +740,7 @@ public class Game {
 				continentOwned = false;
 			}
 		}
-		if (continentOwned = true) {
+		if (continentOwned == true) {
 			total = total + 5;
 		}
 		continentOwned = true;
@@ -704,7 +749,7 @@ public class Game {
 				continentOwned = false;
 			}
 		}
-		if (continentOwned = true) {
+		if (continentOwned == true) {
 			total = total + 3;
 		}
 		continentOwned = true;
@@ -713,7 +758,7 @@ public class Game {
 				continentOwned = false;
 			}
 		}
-		if (continentOwned = true) {
+		if (continentOwned == true) {
 			total = total + 7;
 		}
 		continentOwned = true;
@@ -722,9 +767,9 @@ public class Game {
 				continentOwned = false;
 			}
 		}
-		if (continentOwned = true) {
+		if (continentOwned == true) {
 			total = total + 2;
-		}*/
+		}
 
 		//cards
 		

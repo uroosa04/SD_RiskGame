@@ -4,6 +4,7 @@ public class Player {
 	private String name;
 	private int army;
 	private ArrayList<Country> countriesHeld = new ArrayList<Country>();
+	private ArrayList<Card> cardsHeld = new ArrayList<Card>();
 	
 	public Player(String name, int army) {
 		this.name = name;
@@ -36,5 +37,17 @@ public class Player {
 	
 	public ArrayList<Country> getCountries(){
 		return countriesHeld;
+	}
+	
+	public void addCard(Card card) {
+		cardsHeld.add(card);
+	}
+	
+	public void subractCard(Card card) {
+		cardsHeld.remove(card);
+	}
+	
+	public ArrayList<Card> getCards(){
+		return cardsHeld;
 	}
 }
