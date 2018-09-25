@@ -14,6 +14,7 @@ public class Game {
 		///////////////////////////////////////////////////////////////////////////////////
 		
 		//Country for wild card
+		Country WildCard = new Country("Wild Card");
 		
 		//North America
 		Country Alaska = new Country("Alaska");
@@ -478,8 +479,8 @@ public class Game {
 		//Cards and Deck
 		
 		List<Card> cardList = new ArrayList<Card>();
-		cardList.add(new Card("Wild Card", null));
-		cardList.add(new Card("Wild Card", null));
+		cardList.add(new Card("Wild Card", WildCard));
+		cardList.add(new Card("Wild Card", WildCard));
 		cardList.add(new Card("Artillery", Afghanistan));
 		cardList.add(new Card("Infantry", Alaska));
 		cardList.add(new Card("Cavalry", Alberta));
@@ -600,10 +601,9 @@ public class Game {
 		initialArmyPlacement(playerList.get(0), Quebec);
 		initialArmyPlacement(playerList.get(0), WesternUnitedStates);
 		
-		//System.out.println(getNewArmies(playerList.get(0), NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia));
-		System.out.println(cardList.get(0).getType());
+		
 		givePlayerRandomCard(playerList.get(0), cardList);
-		//System.out.println(playerList.get(0).getCards().get(0).getCountry().getName() + "\n");
+		
 		
 		//for (int x=0 ; x < cardList.size() ; x++) {
 		//	System.out.println(cardList.get(x).getCountry().getName());
@@ -704,17 +704,26 @@ public class Game {
 		sc.close();
 	}
 	
-	public static void givePlayerRandomCard(Player player, List<Card> list) {
-		int r = (int) (Math.random() * list.size());
-		player.addCard(list.get(r));
-		list.remove(r);
+	public static int getNewArmiesFromCards(Player player) {
+		if (player.getCards().size() < 3) {
+			System.out.println("You dont have cards to turn in.");
+		}
 	}
 	
-	public static int getNewArmies(Player player, Continent continent1, Continent continent2, Continent continent3, 
+	public static void givePlayerRandomCard(Player player, List<Card> list) {
+		if(list.size() != 0) {
+			int r = (int) (Math.random() * list.size());
+			player.addCard(list.get(r));
+			list.remove(r);
+		}
+	}
+	
+	public static int getNewArmiesFromCountriesAndContinents(Player player, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		int total = 0;
 		
 		total = player.getCountries().size()/3;
+		System.out.println("You got " + total + " armies from countries owned.");
 		
 		boolean continentOwned = true;
 		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
@@ -770,8 +779,6 @@ public class Game {
 		if (continentOwned == true) {
 			total = total + 2;
 		}
-
-		//cards
 		
 		return total;
 	}

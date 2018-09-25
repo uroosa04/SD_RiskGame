@@ -31,8 +31,7 @@ public class Card {
 	//     Third set traded in -- 8 armies
 	//     Fourth set traded in -- 10 armies
 	//     Fifth set traded in -- 12 armies
-	//     Sixth set traded in -- 15 armies
-	//     Seventh and up 20+5(n-7) (n being the number of trade ins)
+	//     Sixth set and up uses the formula 15+5(n-6) to determine armies
 	//
 	//Occupied territories: If any of the 3 cards you trade in shows the picture of a territory you occupy, 
 	//you receive 2 extra armies, even if there are multiple matches, only two extra armies. 
