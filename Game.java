@@ -588,26 +588,14 @@ public class Game {
 			if (counter == numberOfPlayers) {
 				break;
 			}
+		}		
+		
+		
+		for (int x=0 ; x < 5 ; x++) {
+			givePlayerRandomCard(playerList.get(0), cardList);
 		}
 		
-		//testing
-		//initialArmyPlacement(playerList.get(0), Alaska);
-		initialArmyPlacement(playerList.get(0), Alberta);
-		initialArmyPlacement(playerList.get(0), CentralAmerica);
-		initialArmyPlacement(playerList.get(0), EasternUnitedStates);
-		initialArmyPlacement(playerList.get(0), Greenland);
-		initialArmyPlacement(playerList.get(0), NorthwestTerritory);
-		initialArmyPlacement(playerList.get(0), Ontario);
-		initialArmyPlacement(playerList.get(0), Quebec);
-		initialArmyPlacement(playerList.get(0), WesternUnitedStates);
-		
-		
-		givePlayerRandomCard(playerList.get(0), cardList);
-		
-		
-		//for (int x=0 ; x < cardList.size() ; x++) {
-		//	System.out.println(cardList.get(x).getCountry().getName());
-		//}
+		getNewArmiesFromCards(playerList.get(0), sc);
 		/*
 		
 		//The game starts for the players, as the rules dictate,
@@ -704,9 +692,73 @@ public class Game {
 		sc.close();
 	}
 	
-	public static int getNewArmiesFromCards(Player player) {
+	public static int getNewArmiesFromCards(Player player, Scanner scanner) {
+		
+		boolean hasWildCard = false;
+		int infantry = 0;
+		int cavalry = 0;
+		int artillery = 0;
+		boolean playerAnswer = false;
+		
+		
 		if (player.getCards().size() < 3) {
 			System.out.println("You dont have cards to turn in.");
+		}
+		else {
+			for (int x=0 ; x < player.getCards().size() ; x++) {
+				if (player.getCards().get(x).getType() == "Infantry") {
+					infantry++;
+				}
+				if (player.getCards().get(x).getType() == "Cavalry") {
+					cavalry++;
+				}
+				if (player.getCards().get(x).getType() == "Artillery") {
+					artillery++;
+				}
+				if (player.getCards().get(x).getType() == "Wild Card") {
+					hasWildCard = true;
+				}
+			}
+			if ((infantry >= 3 || cavalry >= 3 || artillery >= 3) || (infantry >= 1 && cavalry >= 1 && artillery >= 1) || hasWildCard ) {
+				if (player.getCards().size() > 4) {
+					System.out.println("You have to turn cards in.");
+				}
+				if (player.getCards().size() < 5) {
+					System.out.println("Would you like to turn cards in?");
+					playerAnswer = askPlayerForYesOrNo(scanner);
+				}
+				if ((playerAnswer == true) || (player.getCards().size() > 4)) {
+					System.out.println("Which cards would you like to turn in?\nType the numbers separated by spaces.");
+					for (int x = 0 ; x < player.getCards().size() ; x++) {
+						System.out.println((x+1) + " " + player.getCards().get(x).getType() + " - " + player.getCards().get(x).getCountry().getName());
+					}
+				}
+			}
+			else {
+				System.out.println("You dont have cards to turn in.");
+			}
+		}
+		return 1;
+	}
+	
+	public static boolean askPlayerForYesOrNo(Scanner input) {
+		int first =  1;
+		while (true) {
+			String line = input.nextLine();
+			
+			if (line.toLowerCase().equals("y")) {
+				return true;
+			}
+			
+			if (line.toLowerCase().equals("n")) {
+				return false;
+			}
+			
+			
+			if (!(line.toLowerCase().equals("y") && !(line.toLowerCase().equals("n"))) && first > 1) {
+				System.out.println("Invalid input, please try again");
+			}
+			first++;
 		}
 	}
 	
@@ -901,7 +953,7 @@ public class Game {
 						+ " with " + continent1.getCountries().get(x).getArmy() + " armies");
 			}
 		}
-		System.out.println("\nSouthAmerica:");
+		System.out.println("SouthAmerica:");
 		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
 			if (continent2.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent2.getCountries().get(x).getName() + "- Unowned");
@@ -912,7 +964,7 @@ public class Game {
 						+ " with " + continent2.getCountries().get(x).getArmy() + " armies");
 			}
 		}
-		System.out.println("\nEurope:");
+		System.out.println("Europe:");
 		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
 			if (continent3.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent3.getCountries().get(x).getName() + "- Unowned");
@@ -923,7 +975,7 @@ public class Game {
 						+ " with " + continent3.getCountries().get(x).getArmy() + " armies");
 			}
 		}
-		System.out.println("\nAfrica:");
+		System.out.println("Africa:");
 		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
 			if (continent4.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent4.getCountries().get(x).getName() + "- Unowned");
@@ -934,7 +986,7 @@ public class Game {
 						+ " with " + continent4.getCountries().get(x).getArmy() + " armies");
 			}
 		}
-		System.out.println("\nAsia:");
+		System.out.println("Asia:");
 		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
 			if (continent5.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent5.getCountries().get(x).getName() + "- Unowned");
@@ -945,7 +997,7 @@ public class Game {
 						+ " with " + continent5.getCountries().get(x).getArmy() + " armies");
 			}
 		}
-		System.out.println("\nAustralia:");
+		System.out.println("Australia:");
 		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
 			if (continent6.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent6.getCountries().get(x).getName() + "- Unowned");
