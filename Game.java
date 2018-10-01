@@ -590,8 +590,10 @@ public class Game {
 			}
 		}		
 		
+		initialArmyPlacement(playerList.get(0), Ontario);
+		initialArmyPlacement(playerList.get(0), Argentina);
 		
-		for (int x=0 ; x < 5 ; x++) {
+		for (int x=0 ; x < 6 ; x++) {
 			givePlayerRandomCard(playerList.get(0), cardList);
 		}
 		
@@ -699,6 +701,7 @@ public class Game {
 		int cavalry = 0;
 		int artillery = 0;
 		boolean playerAnswer = false;
+		int total = 0;
 		
 		
 		if (player.getCards().size() < 3) {
@@ -728,17 +731,109 @@ public class Game {
 					playerAnswer = askPlayerForYesOrNo(scanner);
 				}
 				if ((playerAnswer == true) || (player.getCards().size() > 4)) {
-					System.out.println("Which cards would you like to turn in?\nType the numbers separated by spaces.");
+					boolean matchedCountry = false;
+					System.out.println("These are the cards you have:");
 					for (int x = 0 ; x < player.getCards().size() ; x++) {
-						System.out.println((x+1) + " " + player.getCards().get(x).getType() + " - " + player.getCards().get(x).getCountry().getName());
+						if (player.getCountries().contains(player.getCards().get(x).getCountry())) {
+							System.out.println((x+1) + " " + player.getCards().get(x).getType() + " - " 
+									+ player.getCards().get(x).getCountry().getName() + " (You own this country)");
+						}
+						else {
+							System.out.println((x+1) + " " + player.getCards().get(x).getType() + " - " + player.getCards().get(x).getCountry().getName());
+						}
+						
 					}
+					int[] selectedCards = new int[3];
+					boolean appropriateSelection = false;
+					System.out.println("Which cards would you like to turn in?\n(Input each card number individually)");
+					for (int x=0 ; x < selectedCards.length ; x++) {
+						selectedCards[x] = askPlayerForInt(scanner);
+						while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsInArray(selectedCards, selectedCards[x], x)) {
+							System.out.println("Please input an appropiate number.");
+							selectedCards[x] = askPlayerForInt(scanner);
+						}
+					}
+					
+					if (hasCombinationOfCardsToTurnIn(selectedCards, player)) {
+						appropriateSelection = true;
+					}
+					
+					while (!appropriateSelection) {
+						System.out.println("That combination of cards cannot be turned in, try again");
+						for (int x=0 ; x < selectedCards.length ; x++) {
+							selectedCards[x]=0;
+						}
+						for (int x=0 ; x < selectedCards.length ; x++) {
+							selectedCards[x] = askPlayerForInt(scanner);
+							while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsInArray(selectedCards, selectedCards[x], x)) {
+								System.out.println("Please input an appropiate number.");
+								selectedCards[x] = askPlayerForInt(scanner);
+							}
+						}
+						if (hasCombinationOfCardsToTurnIn(selectedCards, player)) {
+							appropriateSelection = true;
+						}
+					}
+					if (ownedCountryMatchesCard(selectedCards, player)) {
+						matchedCountry = true;
+					}
+					for (int x=0 ; x < selectedCards.length ; x++) {
+						player.getCards().remove(selectedCards[x]-1);
+					}
+					
 				}
 			}
 			else {
 				System.out.println("You dont have cards to turn in.");
 			}
 		}
-		return 1;
+		return 0;
+	}
+	
+	public static boolean ownedCountryMatchesCard(int[] array, Player player) {
+		for (int x=0 ; x < array.length ; x++) {
+			if (player.getCountries().contains(player.getCards().get(array[x]-1).getCountry())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean hasCombinationOfCardsToTurnIn(int[] array , Player player) {
+		boolean hasWildCard = false;
+		int infantry = 0;
+		int cavalry = 0;
+		int artillery = 0;
+		
+		for (int x=0 ; x < array.length ; x++) {
+			if (player.getCards().get(array[x]-1).getType() == "Infantry") {
+				infantry++;
+			}
+			if (player.getCards().get(array[x]-1).getType() == "Cavalry") {
+				cavalry++;
+			}
+			if (player.getCards().get(array[x]-1).getType() == "Artillery") {
+				artillery++;
+			}
+			if (player.getCards().get(array[x]-1).getType() == "Wild Card") {
+				hasWildCard = true;
+			}
+		}
+		if ((infantry >= 3 || cavalry >= 3 || artillery >= 3) || (infantry >= 1 && cavalry >= 1 && artillery >= 1) || hasWildCard ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public static boolean intIsInArray(int[] array, int number, int index) {
+		for (int x=0 ; x < array.length ; x++) {
+			if (number == array[x] && index != x) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static boolean askPlayerForYesOrNo(Scanner input) {
