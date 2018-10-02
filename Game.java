@@ -542,6 +542,7 @@ public class Game {
 		int counter; //Helper variable for loops
 		List<Player> playerList = new ArrayList<Player>(); //Array list with players name in turn order
 		int totalNumberOfArmyPerPlayer = 0; //The number of armies per player decided by game rules and total players
+		int numberOfTurnIns = 1;
 		
 		
 		//Game starts and asks the amount of players
@@ -597,7 +598,7 @@ public class Game {
 			givePlayerRandomCard(playerList.get(0), cardList);
 		}
 		
-		getNewArmiesFromCards(playerList.get(0), sc);
+		System.out.println(getNewArmiesFromCards(playerList.get(0), sc, numberOfTurnIns));
 		/*
 		
 		//The game starts for the players, as the rules dictate,
@@ -694,7 +695,7 @@ public class Game {
 		sc.close();
 	}
 	
-	public static int getNewArmiesFromCards(Player player, Scanner scanner) {
+	public static int getNewArmiesFromCards(Player player, Scanner scanner, int numberOfTurnIns) {
 		
 		boolean hasWildCard = false;
 		int infantry = 0;
@@ -731,7 +732,6 @@ public class Game {
 					playerAnswer = askPlayerForYesOrNo(scanner);
 				}
 				if ((playerAnswer == true) || (player.getCards().size() > 4)) {
-					boolean matchedCountry = false;
 					System.out.println("These are the cards you have:");
 					for (int x = 0 ; x < player.getCards().size() ; x++) {
 						if (player.getCountries().contains(player.getCards().get(x).getCountry())) {
@@ -774,13 +774,23 @@ public class Game {
 							appropriateSelection = true;
 						}
 					}
-					if (ownedCountryMatchesCard(selectedCards, player)) {
-						matchedCountry = true;
-					}
-					for (int x=0 ; x < selectedCards.length ; x++) {
-						player.getCards().remove(selectedCards[x]-1);
+					
+					if (numberOfTurnIns < 6) {
+						total = (2+(2*numberOfTurnIns));
 					}
 					
+					if (numberOfTurnIns > 5) {
+						total = (15+(5*(numberOfTurnIns-6)));
+					}
+					if (ownedCountryMatchesCard(selectedCards, player)) {
+						total = total+2;
+					}
+					
+					for (int x=0 ; x < selectedCards.length ; x++) {
+						System.out.println(player.getCards().get(selectedCards[x]-1).getCountry().getName());
+					}
+					
+					return total;
 				}
 			}
 			else {
