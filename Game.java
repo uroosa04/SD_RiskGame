@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
 
@@ -582,7 +583,7 @@ public class Game {
 		sc.reset();
 		counter = 0;
 		while (sc.hasNextLine()) {
-			System.out.println("What Player " + (counter+1) + "s name?");
+			System.out.println("What's Player " + (counter+1) + "s name?");
 			name = sc.next();
 			playerList.add(new Player(name,totalNumberOfArmyPerPlayer));
 			counter++;
@@ -591,21 +592,13 @@ public class Game {
 			}
 		}		
 		
-		initialArmyPlacement(playerList.get(0), Ontario);
-		initialArmyPlacement(playerList.get(0), Argentina);
-		
-		for (int x=0 ; x < 6 ; x++) {
-			givePlayerRandomCard(playerList.get(0), cardList);
-		}
-		
-		System.out.println(getNewArmiesFromCards(playerList.get(0), sc, numberOfTurnIns));
-		/*
 		
 		//The game starts for the players, as the rules dictate,
 		//they place one army in open countries until they are all taken
 		
 		int indexHelper = 0;
 		Country selectedCountry;
+		/*
 		System.out.println("Let's begin!");
 		System.out.println("To start, all players most place one army in a country"
 				+ "\nuntil the board is filled in turns.");
@@ -668,7 +661,21 @@ public class Game {
 			}
 		}
 		
+		*/
+		
 		//All armies have been placed and its time to start the game
+		
+		initialArmyPlacement(playerList.get(0) , Argentina);
+		initialArmyPlacement(playerList.get(0) , Peru);
+		initialArmyPlacement(playerList.get(0) , Brazil);
+		initialArmyPlacement(playerList.get(0) , Venezuela);
+		initialArmyPlacement(playerList.get(1) , CentralAmerica);
+		
+		for (int x=0; x < 5; x++) {
+			givePlayerRandomCard(playerList.get(0), cardList);
+		}
+		playerList.get(0).decreaseArmy(36);
+		System.out.println(playerList.get(0).getArmy());
 		
 		System.out.println("\nTime to start the game!");
 		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
@@ -679,7 +686,72 @@ public class Game {
 			//Fortifying your position
 			
 			//Getting new armies
-			int newArmies = getNewArmies(playerList.get(x),NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+			int newArmiesFromCountriesAndContinents = getNewArmiesFromCountriesAndContinents(playerList.get(x),NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+			int newArmiesFromCards = getNewArmiesFromCards(playerList.get(x), sc, numberOfTurnIns);
+			if (newArmiesFromCards > 0) {
+				numberOfTurnIns++;
+			}
+			playerList.get(x).increaseArmy(newArmiesFromCountriesAndContinents + newArmiesFromCards);
+			
+			
+			//Placing new armies
+			while (playerList.get(x).getArmy() != 0) {
+				System.out.println("\nYou have " + playerList.get(x).getArmy() + " armies to place.");
+				System.out.println("\nCountries are: ");
+				printCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+				System.out.println("\nType the country's name to place an army");
+				while (true) {
+					selectedCountry = askPlayerForCountry(sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+					if (selectedCountry.getOwner() == playerList.get(x)) {
+						break;
+					}
+					if (selectedCountry.hasPlayer() == true) {
+						System.out.println("That country is not yours, try again.");
+					}
+				}
+				initialArmyPlacement(playerList.get(x), selectedCountry);
+			}
+			System.out.println("You placed all your armies!");
+			
+			//Attacking
+			System.out.println("Do you want to attack? (type Y or N)");
+			boolean playerAnswer = askPlayerForYesOrNo(sc);
+			if (playerAnswer == true) {
+				//Attack
+				Player selectedPlayer = null;
+				if (numberOfPlayers > 2) {
+					System.out.println(playerList.get(x).getName() + " ,who would you like to attack?");
+					while (true) {
+						selectedPlayer = askPlayerForPlayer(sc , playerList);
+						if (selectedPlayer != playerList.get(x) && playerCanAttackPlayer(playerList.get(x) , selectedPlayer)) {
+							break;
+						}
+						if (playerCanAttackPlayer(playerList.get(x) , selectedPlayer) == false) {
+							System.out.println("You can't attack " + selectedPlayer + " because there aren't adjacent countries. Try Again");
+						}
+						if (selectedPlayer == playerList.get(x)) {
+							System.out.println("You can't attack yourself! Try again.");
+						}
+					} 
+				}
+				else {
+					if (x == 0) {
+						selectedPlayer = playerList.get(1);
+					}
+					else {
+						selectedPlayer = playerList.get(0);
+					}
+				}
+				attack(playerList.get(x), selectedPlayer);
+				System.out.println(playerCanAttackPlayer(playerList.get(x) , selectedPlayer));
+			}
+			
+			//Fortifying
+			System.out.println("Do you want to fortify? (type Y or N)");
+			playerAnswer = askPlayerForYesOrNo(sc);
+			if (playerAnswer == true) {
+				//Fortify
+			}
 			
 			if (playerList.get(x).getCountries().size() == 42) {
 				x = numberOfPlayers;
@@ -691,8 +763,41 @@ public class Game {
 		}
 		
 		/////
-		 */
 		sc.close();
+	}
+	
+	public static void attack (Player attackingPlayer, Player attackedPlayer) {
+		System.out.println(attackingPlayer.getName() + " is attacking " + attackedPlayer.getName() + "!");
+	}
+	
+	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
+		for (int x=0 ; x < attackingPlayer.getCountries().size() ; x++ ) {
+			for(int y = 0 ; y < attackingPlayer.getCountries().get(x).getAdjacentCountries().size() ; y++) {
+				if (attackedPlayer.getCountries().contains(attackingPlayer.getCountries().get(x).getAdjacentCountries().get(y))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static Player askPlayerForPlayer (Scanner input, List<Player> playerList) {
+		Player player = null;
+		boolean hasReturned = false;
+		while (true) {
+			input.reset();
+			String line = input.nextLine();
+			for (int x=0 ; x < playerList.size() ; x++) {
+				if (line.toLowerCase().equals(playerList.get(x).getName().toLowerCase())) {
+					player = playerList.get(x);
+					hasReturned = true;
+					return player;
+				}
+			}
+			if (!hasReturned) {
+				System.out.println("Invalid input, please try again");
+			}
+		}
 	}
 	
 	public static int getNewArmiesFromCards(Player player, Scanner scanner, int numberOfTurnIns) {
@@ -728,7 +833,7 @@ public class Game {
 					System.out.println("You have to turn cards in.");
 				}
 				if (player.getCards().size() < 5) {
-					System.out.println("Would you like to turn cards in?");
+					System.out.println("Would you like to turn cards in? (type Y or N)");
 					playerAnswer = askPlayerForYesOrNo(scanner);
 				}
 				if ((playerAnswer == true) || (player.getCards().size() > 4)) {
@@ -737,6 +842,9 @@ public class Game {
 						if (player.getCountries().contains(player.getCards().get(x).getCountry())) {
 							System.out.println((x+1) + " " + player.getCards().get(x).getType() + " - " 
 									+ player.getCards().get(x).getCountry().getName() + " (You own this country)");
+						}
+						else if (player.getCards().get(x).getType() == "Wild Card") {
+							System.out.println((x+1) + " Wild Card");
 						}
 						else {
 							System.out.println((x+1) + " " + player.getCards().get(x).getType() + " - " + player.getCards().get(x).getCountry().getName());
@@ -777,6 +885,7 @@ public class Game {
 					
 					if (numberOfTurnIns < 6) {
 						total = (2+(2*numberOfTurnIns));
+						System.out.println("You got " + total + " cards from cards.");
 					}
 					
 					if (numberOfTurnIns > 5) {
@@ -784,10 +893,14 @@ public class Game {
 					}
 					if (ownedCountryMatchesCard(selectedCards, player)) {
 						total = total+2;
+						System.out.println("And 2 extra cards from a matched country.");
 					}
 					
-					for (int x=0 ; x < selectedCards.length ; x++) {
-						System.out.println(player.getCards().get(selectedCards[x]-1).getCountry().getName());
+					Arrays.sort(selectedCards);
+					
+					
+					for (int x=(selectedCards.length-1) ; x > -1 ; x--) {
+						player.getCards().remove(selectedCards[x]-1);
 					}
 					
 					return total;
@@ -847,8 +960,9 @@ public class Game {
 	}
 	
 	public static boolean askPlayerForYesOrNo(Scanner input) {
-		int first =  1;
+		boolean firstTime = true;
 		while (true) {
+			input.reset();
 			String line = input.nextLine();
 			
 			if (line.toLowerCase().equals("y")) {
@@ -858,12 +972,10 @@ public class Game {
 			if (line.toLowerCase().equals("n")) {
 				return false;
 			}
-			
-			
-			if (!(line.toLowerCase().equals("y") && !(line.toLowerCase().equals("n"))) && first > 1) {
+			if (firstTime == false) {
 				System.out.println("Invalid input, please try again");
 			}
-			first++;
+			firstTime = false;
 		}
 	}
 	
@@ -890,6 +1002,7 @@ public class Game {
 		}
 		if (continentOwned == true) {
 			total = total + 5;
+			System.out.println("You got 5 from owning North America.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
@@ -899,6 +1012,7 @@ public class Game {
 		}
 		if (continentOwned == true) {
 			total = total + 2;
+			System.out.println("You got 2 from owning South America.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
@@ -908,6 +1022,7 @@ public class Game {
 		}
 		if (continentOwned == true) {
 			total = total + 5;
+			System.out.println("You got 5 from owning Europe.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
@@ -917,6 +1032,7 @@ public class Game {
 		}
 		if (continentOwned == true) {
 			total = total + 3;
+			System.out.println("You got 3 from owning Africa");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
@@ -926,6 +1042,7 @@ public class Game {
 		}
 		if (continentOwned == true) {
 			total = total + 7;
+			System.out.println("You got 7 from owning Asia.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
@@ -935,6 +1052,7 @@ public class Game {
 		}
 		if (continentOwned == true) {
 			total = total + 2;
+			System.out.println("You got 2 from owning Australia.");
 		}
 		
 		return total;
@@ -990,9 +1108,9 @@ public class Game {
 	public static Country askPlayerForCountry (Scanner input, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		Country country = null;
-		boolean matched = false;
-		int first =  1;
+		boolean firstTime = true;
 		while (true) {
+			input.reset();
 			String line = input.nextLine();
 			for (int x=0 ; x < continent1.getCountries().size() ; x++) {
 				if (line.toLowerCase().equals(continent1.getCountries().get(x).getName().toLowerCase())) {
@@ -1030,10 +1148,10 @@ public class Game {
 					return country;
 				}
 			}
-			if (matched == false && first > 1) {
+			if (firstTime == false) {
 				System.out.println("Invalid input, please try again");
 			}
-			first++;
+			firstTime = false;
 		}
 	}
 	
