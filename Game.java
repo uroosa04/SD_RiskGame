@@ -674,7 +674,7 @@ public class Game {
 		for (int x=0; x < 5; x++) {
 			givePlayerRandomCard(playerList.get(0), cardList);
 		}
-		playerList.get(0).decreaseArmy(36);
+		playerList.get(0).decreaseArmy(36); // TESTING PURPOSES!!! THIS LINE TO BE ERASED LATER
 		System.out.println(playerList.get(0).getArmy());
 		
 		System.out.println("\nTime to start the game!");
