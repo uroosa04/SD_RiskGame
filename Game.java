@@ -716,7 +716,7 @@ public class Game {
 			//Attacking
 			System.out.println("Do you want to attack? (type Y or N)");
 			boolean playerAnswer = askPlayerForYesOrNo(sc);
-			if (playerAnswer == true) {
+			while (playerAnswer == true) {
 				//Attack
 				Player selectedPlayer = null;
 				if (numberOfPlayers > 2) {
@@ -742,8 +742,7 @@ public class Game {
 						selectedPlayer = playerList.get(0);
 					}
 				}
-				attack(playerList.get(x), selectedPlayer);
-				System.out.println(playerCanAttackPlayer(playerList.get(x) , selectedPlayer));
+				attack(playerList.get(x), selectedPlayer, sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 			}
 			
 			//Fortifying
@@ -766,14 +765,28 @@ public class Game {
 		sc.close();
 	}
 	
-	public static void attack (Player attackingPlayer, Player attackedPlayer) {
+	public static void attack (Player attackingPlayer, Player attackedPlayer, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
+			Continent continent4, Continent continent5, Continent continent6) {
+		Country attackingCountry;
+		Country attackedCountry;
 		System.out.println(attackingPlayer.getName() + " is attacking " + attackedPlayer.getName() + "!");
+		System.out.println(attackingPlayer.getName() + ", input attacking and attacked countries separately");
+		while (true) {
+			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
+					continent4, continent5, continent6);
+			attackedCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
+					continent4, continent5, continent6);
+			if () {
+				
+			}
+		}
 	}
 	
 	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
 		for (int x=0 ; x < attackingPlayer.getCountries().size() ; x++ ) {
 			for(int y = 0 ; y < attackingPlayer.getCountries().get(x).getAdjacentCountries().size() ; y++) {
-				if (attackedPlayer.getCountries().contains(attackingPlayer.getCountries().get(x).getAdjacentCountries().get(y))) {
+				if (attackedPlayer.getCountries().contains(attackingPlayer.getCountries().get(x).getAdjacentCountries().get(y)) 
+						&& attackingPlayer.getCountries().get(x).getArmy() > 1) {
 					return true;
 				}
 			}
@@ -856,7 +869,7 @@ public class Game {
 					System.out.println("Which cards would you like to turn in?\n(Input each card number individually)");
 					for (int x=0 ; x < selectedCards.length ; x++) {
 						selectedCards[x] = askPlayerForInt(scanner);
-						while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsInArray(selectedCards, selectedCards[x], x)) {
+						while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsIn(selectedCards, selectedCards[x], x)) {
 							System.out.println("Please input an appropiate number.");
 							selectedCards[x] = askPlayerForInt(scanner);
 						}
@@ -873,7 +886,7 @@ public class Game {
 						}
 						for (int x=0 ; x < selectedCards.length ; x++) {
 							selectedCards[x] = askPlayerForInt(scanner);
-							while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsInArray(selectedCards, selectedCards[x], x)) {
+							while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsIn(selectedCards, selectedCards[x], x)) {
 								System.out.println("Please input an appropiate number.");
 								selectedCards[x] = askPlayerForInt(scanner);
 							}
@@ -896,7 +909,7 @@ public class Game {
 						System.out.println("And 2 extra cards from a matched country.");
 					}
 					
-					Arrays.sort(selectedCards);
+					s.sort(selectedCards);
 					
 					
 					for (int x=(selectedCards.length-1) ; x > -1 ; x--) {
@@ -913,7 +926,7 @@ public class Game {
 		return 0;
 	}
 	
-	public static boolean ownedCountryMatchesCard(int[] array, Player player) {
+	public static boolean ownedCountryMatchesCard(int[] , Player player) {
 		for (int x=0 ; x < array.length ; x++) {
 			if (player.getCountries().contains(player.getCards().get(array[x]-1).getCountry())) {
 				return true;
