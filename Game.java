@@ -681,9 +681,33 @@ public class Game {
 		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
 			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!");
 			
+			//Credits
 			//Getting and placing new armies
 			//Attacking
 			//Fortifying your position
+			
+			//Credits
+			System.out.println("Do you want to buy, use, or transfer credits?");
+			boolean playerAnswer = askPlayerForYesOrNo(sc);
+			if (playerAnswer) {
+				System.out.println("What would you like to do? (Buy, Use, Transfer)");
+				while (true) {
+					String playerAnswerForCredits = sc.nextLine();
+					if (playerAnswerForCredits.toLowerCase() == "buy") {
+						System.out.println("How many credits would you like to buy?");
+						int creditsToBuy = askPlayerForInt(sc);
+					}
+					else if (playerAnswerForCredits.toLowerCase() == "use") {
+						
+					}
+					else if (playerAnswerForCredits.toLowerCase() == "transfer") {
+						
+					}
+					else {
+						System.out.println("Invalid input, try again.");
+					}
+				}
+			}
 			
 			//Getting new armies
 			int newArmiesFromCountriesAndContinents = getNewArmiesFromCountriesAndContinents(playerList.get(x),NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
@@ -715,7 +739,7 @@ public class Game {
 			
 			//Attacking
 			System.out.println("Do you want to attack? (type Y or N)");
-			boolean playerAnswer = askPlayerForYesOrNo(sc);
+			playerAnswer = askPlayerForYesOrNo(sc);
 			while (playerAnswer == true) {
 				//Attack
 				Player selectedPlayer = null;
@@ -769,16 +793,16 @@ public class Game {
 			Continent continent4, Continent continent5, Continent continent6) {
 		Country attackingCountry;
 		Country attackedCountry;
-		System.out.println(attackingPlayer.getName() + " is attacking " + attackedPlayer.getName() + "!");
+		System.out.println(attackedPlayer.getName() + ", you're being attacketd!");
 		System.out.println(attackingPlayer.getName() + ", input attacking and attacked countries separately");
 		while (true) {
 			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
 					continent4, continent5, continent6);
 			attackedCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
 					continent4, continent5, continent6);
-			if () {
+			
 				
-			}
+			
 		}
 	}
 	
@@ -869,7 +893,7 @@ public class Game {
 					System.out.println("Which cards would you like to turn in?\n(Input each card number individually)");
 					for (int x=0 ; x < selectedCards.length ; x++) {
 						selectedCards[x] = askPlayerForInt(scanner);
-						while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsIn(selectedCards, selectedCards[x], x)) {
+						while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsInArray(selectedCards, selectedCards[x], x)) {
 							System.out.println("Please input an appropiate number.");
 							selectedCards[x] = askPlayerForInt(scanner);
 						}
@@ -886,7 +910,7 @@ public class Game {
 						}
 						for (int x=0 ; x < selectedCards.length ; x++) {
 							selectedCards[x] = askPlayerForInt(scanner);
-							while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsIn(selectedCards, selectedCards[x], x)) {
+							while (selectedCards[x] < 0 || selectedCards[x] > player.getCards().size() || intIsInArray(selectedCards, selectedCards[x], x)) {
 								System.out.println("Please input an appropiate number.");
 								selectedCards[x] = askPlayerForInt(scanner);
 							}
@@ -909,7 +933,8 @@ public class Game {
 						System.out.println("And 2 extra cards from a matched country.");
 					}
 					
-					s.sort(selectedCards);
+					Arrays.sort(selectedCards);
+					
 					
 					
 					for (int x=(selectedCards.length-1) ; x > -1 ; x--) {
@@ -926,7 +951,7 @@ public class Game {
 		return 0;
 	}
 	
-	public static boolean ownedCountryMatchesCard(int[] , Player player) {
+	public static boolean ownedCountryMatchesCard(int[] array , Player player) {
 		for (int x=0 ; x < array.length ; x++) {
 			if (player.getCountries().contains(player.getCards().get(array[x]-1).getCountry())) {
 				return true;

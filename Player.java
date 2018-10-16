@@ -5,6 +5,7 @@ public class Player {
 	private int army;
 	private ArrayList<Country> countriesHeld = new ArrayList<Country>();
 	private ArrayList<Card> cardsHeld = new ArrayList<Card>();
+	private int credits;
 	
 	public Player(String name, int army) {
 		this.name = name;
