@@ -6,10 +6,13 @@ public class Player {
 	private ArrayList<Country> countriesHeld = new ArrayList<Country>();
 	private ArrayList<Card> cardsHeld = new ArrayList<Card>();
 	private int credits;
+	private int undo;
 	
 	public Player(String name, int army) {
 		this.name = name;
 		this.army = army;
+		this.credits = 0;
+		this.undo = 0;
 	}
 	
 	public String getName() {
@@ -50,5 +53,23 @@ public class Player {
 	
 	public ArrayList<Card> getCards(){
 		return cardsHeld;
+	}
+	public void addCredits(int creditsToAdd) {
+		credits = credits + creditsToAdd;
+	}
+	public void removeCredits(int creditsToRemove) {
+		credits = credits - creditsToRemove;
+	}
+	public int getCredits() {
+		return credits;
+	}
+	public void addUndo() {
+		undo++;
+	}
+	public void removeUndo() {
+		undo--;
+	}
+	public int getUndo() {
+		return undo;
 	}
 }

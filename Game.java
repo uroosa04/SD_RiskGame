@@ -696,12 +696,49 @@ public class Game {
 					if (playerAnswerForCredits.toLowerCase() == "buy") {
 						System.out.println("How many credits would you like to buy?");
 						int creditsToBuy = askPlayerForInt(sc);
+						playerList.get(x).addCredits(creditsToBuy);
+						System.out.println("Your new credit total is " + playerList.get(x).getCredits() + ".");
+						break;
 					}
 					else if (playerAnswerForCredits.toLowerCase() == "use") {
-						
+						System.out.println("What would you like to buy? (undo,card)");
+						while (true) {
+							String itemToBuy = sc.nextLine();
+							if (itemToBuy.toLowerCase() == "undo") {
+								playerList.get(x).addUndo();
+								System.out.println("Your new undio total is " + playerList.get(x).getUndo() + ".");
+								break;
+							}
+							if (itemToBuy.toLowerCase() == "card") {
+								givePlayerRandomCard(playerList.get(x), cardList);
+								System.out.println("You got your new card.");
+								break;
+							}
+						}
 					}
 					else if (playerAnswerForCredits.toLowerCase() == "transfer") {
-						
+						System.out.println("Who would you like to give credits to?");
+						while (true) {
+							Player playerToTransfer = askPlayerForPlayer(sc, playerList);
+							if (playerToTransfer == playerList.get(x)) {
+								System.out.println("You can't transfer to yoursef, try again.");
+							}
+							else {
+								System.out.println("How many credits would you like to transfer?");
+								while (true) {
+									int creditsToTransfer = askPlayerForInt(sc);
+									if (creditsToTransfer <= playerList.get(x).getCredits()) {
+										playerList.get(x).removeCredits(creditsToTransfer);
+										playerToTransfer.addCredits(creditsToTransfer);
+										break;
+									}
+									else {
+										System.out.println("You dont have that many credits, try again.");
+									}
+								}
+								break;
+							}
+						}
 					}
 					else {
 						System.out.println("Invalid input, try again.");
