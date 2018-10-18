@@ -2,6 +2,64 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>RiskGameSD</groupId>
   <artifactId>RiskGame</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <dependencies>
+  	<dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.12</version>
+	    <scope>test</scope>
+	</dependency>
+  </dependencies>
+ <build>
+ 	<sourceDirectory>?${basedir}src/main/java</sourceDirectory>
+ 	<plugins>
+ 		<plugin>
+ 			<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-compiler-plugin</artifactId>
+    		<version>3.8.0</version>
+    		<configuration>
+    			<source>1.8</source>
+    			<target>1.8</target>
+    		</configuration>
+ 		</plugin>
+ 	</plugins>
+ </build>
+ 
+ <!--  -->
+ <reporting>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-javadoc-plugin</artifactId>
+  			<version>3.0.1</version>
+  			<configuration>
+  				<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+  				<docletArtifact>
+		            <groupId>org.umlgraph</groupId>
+		            <artifactId>doclet</artifactId>
+		            <version>5.6.6</version>
+
+          		</docletArtifact>
+		        <additionalparam>-views</additionalparam>
+		        <useStandardDocletOptions>true</useStandardDocletOptions>
+  			</configuration>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-javadoc-plugin</artifactId>
+        	<version>3.0.1</version>
+        	<reportSets>
+        		<reportSet>
+        			<id>html</id>
+        			<reports>
+        				<report>javadoc</report>
+        			</reports>
+        		</reportSet>
+        	</reportSets>
+  		</plugin>
+  	</plugins>
+  </reporting>
 </project>
