@@ -598,7 +598,7 @@ public class Game {
 		
 		int indexHelper = 0;
 		Country selectedCountry;
-		/*
+		
 		System.out.println("Let's begin!");
 		System.out.println("To start, all players most place one army in a country"
 				+ "\nuntil the board is filled in turns.");
@@ -661,20 +661,20 @@ public class Game {
 			}
 		}
 		
-		*/
+		
 		
 		//All armies have been placed and its time to start the game
 		
-		initialArmyPlacement(playerList.get(0) , Argentina);
-		initialArmyPlacement(playerList.get(0) , Peru);
-		initialArmyPlacement(playerList.get(0) , Brazil);
-		initialArmyPlacement(playerList.get(0) , Venezuela);
-		initialArmyPlacement(playerList.get(1) , CentralAmerica);
+		//initialArmyPlacement(playerList.get(0) , Argentina); //testing lines
+		//initialArmyPlacement(playerList.get(0) , Peru);
+		//initialArmyPlacement(playerList.get(0) , Brazil);
+		//initialArmyPlacement(playerList.get(0) , Venezuela);
+		//initialArmyPlacement(playerList.get(1) , CentralAmerica);
 		
 		for (int x=0; x < 5; x++) {
 			givePlayerRandomCard(playerList.get(0), cardList);
 		}
-		playerList.get(0).decreaseArmy(36); // TESTING PURPOSES!!! THIS LINE TO BE ERASED LATER
+		//playerList.get(0).decreaseArmy(36); // TESTING PURPOSES!!! THIS LINE TO BE ERASED LATER
 		System.out.println(playerList.get(0).getArmy());
 		
 		System.out.println("\nTime to start the game!");
@@ -838,12 +838,7 @@ public class Game {
 			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
 					continent4, continent5, continent6);
 			
-		}
-		attackedCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
-				continent4, continent5, continent6);
-				
-			
-		}
+		}		
 	}
 	
 	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
