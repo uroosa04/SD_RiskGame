@@ -804,6 +804,8 @@ public class Game {
 					}
 				}
 				attack(playerList.get(x), selectedPlayer, sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
+				System.out.println(playerList.get(x).getName() + " ,who would you like to attack again?");
+				playerAnswer = askPlayerForYesOrNo(sc);
 			}
 			
 			//Fortifying
@@ -831,13 +833,14 @@ public class Game {
 		Country attackingCountry;
 		Country attackedCountry;
 		System.out.println(attackedPlayer.getName() + ", you're being attacketd!");
-		System.out.println(attackingPlayer.getName() + ", input attacking and attacked countries separately");
+		System.out.println(attackingPlayer.getName() + ", From which country are you attaking?");
 		while (true) {
 			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
 					continent4, continent5, continent6);
-			attackedCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
-					continent4, continent5, continent6);
 			
+		}
+		attackedCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
+				continent4, continent5, continent6);
 				
 			
 		}
