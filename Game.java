@@ -820,10 +820,18 @@ public class Game {
 			if (x == numberOfPlayers - 1) {
 				x = -1;
 			}
+			postTweet(playerList, numberOfPlayers); //post a Tweet after every turn
 		}
-		
+		postTweet(playerList, numberOfPlayers); //post a Tweet at the end of the game
 		/////
 		sc.close();
+	}
+	
+	public static void establishTwitterConnection(){ //function to establish Twitter connection using Twitter API
+		//waiting on Twitter to allow access
+	}
+	public static void postTweet(List<Player> playerList, int numOfPlayers){	//function to post Tweet on Twitter 
+		System.out.println("Posted a Tweet of how many territories each player has.");
 	}
 	
 	public static void attack (Player attackingPlayer, Player attackedPlayer, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
