@@ -555,6 +555,13 @@ public class Game {
 			numberOfPlayers = askPlayerForInt(sc);
 		}
 		
+		
+		//connect Twitter to game
+		//TwitterRG newTwitterAcc = new TwitterRG();
+		//newTwitterAcc.establishTwitterConnection(newTwitterAcc.getSecretData());
+		
+		
+		
 		//Sets the total number of armies available for each player according to numberOfPlayers
 		//This numbers are set by the game rules
 		switch(numberOfPlayers) {
@@ -630,6 +637,7 @@ public class Game {
 			if (x == numberOfPlayers - 1) {
 				x = -1;
 			}
+			
 		}
 		
 		//Every country now had an army.
@@ -822,19 +830,19 @@ public class Game {
 			if (x == numberOfPlayers - 1) {
 				x = -1;
 			}
-			postTweet(playerList, numberOfPlayers); //post a Tweet after every turn
+			//post a Tweet after every turn
+			//newTwitterAcc.updateTweet(playerList.get(x).getName() + " now has " + playerList.get(x).numOfCountriesHeld() + " territories!"); 
 		}
-		postTweet(playerList, numberOfPlayers); //post a Tweet at the end of the game
+		
+		//post a Tweet at the end of the game
+		/*for(int u=0;u < numberOfPlayers ; u=u+1){
+			newTwitterAcc.updateTweet(playerList.get(u).getName() + " had " + playerList.get(u).numOfCountriesHeld() + " territories at the end of the game!"); 
+		}*/
+		
 		/////
 		sc.close();
 	}
 	
-	public static void establishTwitterConnection(){ //function to establish Twitter connection using Twitter API
-		//waiting on Twitter to allow access
-	}
-	public static void postTweet(List<Player> playerList, int numOfPlayers){	//function to post Tweet on Twitter 
-		System.out.println("Posted a Tweet of how many territories each player has.");
-	}
 	
 	public static void attack (Player attackingPlayer, Player attackedPlayer, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {

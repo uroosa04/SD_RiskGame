@@ -19,6 +19,9 @@ public class Player {
 		return name;
 	}
 	
+	public int numOfCountriesHeld(){
+		return countriesHeld.size();
+	}
 	public void decreaseArmy(int armyChange) {
 		army = army - armyChange;
 	}
