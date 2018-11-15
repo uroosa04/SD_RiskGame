@@ -1,6 +1,6 @@
 import java.util.Random;
+
 public class Dice {
-	
 	private Random rand;
 	private int outcome;
 	
@@ -13,6 +13,4 @@ public class Dice {
 	public int getDice() {
 		return outcome;
 	}
-	
-	
 }

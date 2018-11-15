@@ -1,11 +1,21 @@
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
 
-public class Game {
+import java.util.*;
 
-	public static void main(String[] args) {
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+public class Game {
+	private String InputTime = "";
+	private int playerIndex = 0;
+	
+public static void main(String[] args) {
+	
 		
 		///////////////////////////////////////////////////////////////////////////////////
 		/////// Initializes everything in the game
@@ -27,28 +37,26 @@ public class Game {
 		Country Ontario = new Country("Ontario");
 		Country Quebec = new Country("Quebec");
 		Country WesternUnitedStates = new Country("Western United States");
-		ArrayList<Country> NorthAmericaCountryList = new ArrayList<Country>() {{
-			add(Alaska);
-			add(Alberta);
-			add(CentralAmerica);
-			add(EasternUnitedStates);
-			add(Greenland);
-			add(NorthwestTerritory);
-			add(Ontario);
-			add(Quebec);
-			add(WesternUnitedStates);
-		}};
+		ArrayList<Country> NorthAmericaCountryList = new ArrayList<Country>();
+			NorthAmericaCountryList.add(Alaska);
+			NorthAmericaCountryList.add(Alberta);
+			NorthAmericaCountryList.add(CentralAmerica);
+			NorthAmericaCountryList.add(EasternUnitedStates);
+			NorthAmericaCountryList.add(Greenland);
+			NorthAmericaCountryList.add(NorthwestTerritory);
+			NorthAmericaCountryList.add(Ontario);
+			NorthAmericaCountryList.add(Quebec);
+			NorthAmericaCountryList.add(WesternUnitedStates);
 		//South America
 		Country Argentina = new Country("Argentina");
 		Country Brazil = new Country("Brazil");
 		Country Peru = new Country("Peru");
 		Country Venezuela = new Country("Venezuela");
-		ArrayList<Country> SouthAmericaCountryList = new ArrayList<Country>() {{
-			add(Argentina);
-			add(Brazil);
-			add(Peru);
-			add(Venezuela);
-		}};
+		ArrayList<Country> SouthAmericaCountryList = new ArrayList<Country>(); 
+			SouthAmericaCountryList.add(Argentina);
+			SouthAmericaCountryList.add(Brazil);
+			SouthAmericaCountryList.add(Peru);
+			SouthAmericaCountryList.add(Venezuela);
 		//Europe
 		Country GreatBritain = new Country("Great Britain");
 		Country Iceland = new Country("Iceland");
@@ -57,15 +65,15 @@ public class Game {
 		Country SouthernEurope = new Country("Southern Europe");
 		Country Ukraine = new Country("Ukraine");
 		Country WesternEurope = new Country("Western Europe");
-		ArrayList<Country> EuropeCountryList = new ArrayList<Country>() {{
-			add(GreatBritain);
-			add(Iceland);
-			add(NorthernEurope);
-			add(Scandinavia);
-			add(SouthernEurope);
-			add(Ukraine);
-			add(WesternEurope);
-		}};
+		ArrayList<Country> EuropeCountryList = new ArrayList<Country>(); 
+			EuropeCountryList.add(GreatBritain);
+			EuropeCountryList.add(Iceland);
+			EuropeCountryList.add(NorthernEurope);
+			EuropeCountryList.add(Scandinavia);
+			EuropeCountryList.add(SouthernEurope);
+			EuropeCountryList.add(Ukraine);
+			EuropeCountryList.add(WesternEurope);
+		
 		//Africa
 		Country Congo = new Country("Congo");
 		Country EastAfrica = new Country("East Africa");
@@ -73,14 +81,13 @@ public class Game {
 		Country Madagascar = new Country("Madagascar");
 		Country NorthAfrica = new Country("North Africa");
 		Country SouthAfrica = new Country("South Africa");
-		ArrayList<Country> AfricaCountryList = new ArrayList<Country>() {{
-			add(Congo);
-			add(EastAfrica);
-			add(Egypt);
-			add(Madagascar);
-			add(NorthAfrica);
-			add(SouthAfrica);
-		}};
+		ArrayList<Country> AfricaCountryList = new ArrayList<Country>();
+			AfricaCountryList.add(Congo);
+			AfricaCountryList.add(EastAfrica);
+			AfricaCountryList.add(Egypt);
+			AfricaCountryList.add(Madagascar);
+			AfricaCountryList.add(NorthAfrica);
+			AfricaCountryList.add(SouthAfrica);
 		//Asia
 		Country Afghanistan = new Country("Afghanistan");
 		Country China = new Country("China");
@@ -94,31 +101,30 @@ public class Game {
 		Country Siberia = new Country("Sibaria");
 		Country Ural = new Country("Ural");
 		Country Yakutsk = new Country("Yakutsk");
-		ArrayList<Country> AsiaCountryList = new ArrayList<Country>() {{
-			add(Afghanistan);
-			add(China);
-			add(India);
-			add(Irkutsk);
-			add(Japan);
-			add(Kamchatka);
-			add(MiddleEast);
-			add(Mongolia);
-			add(Siam);
-			add(Siberia);
-			add(Ural);
-			add(Yakutsk);
-		}};
+		ArrayList<Country> AsiaCountryList = new ArrayList<Country>();
+			AsiaCountryList.add(Afghanistan);
+			AsiaCountryList.add(China);
+			AsiaCountryList.add(India);
+			AsiaCountryList.add(Irkutsk);
+			AsiaCountryList.add(Japan);
+			AsiaCountryList.add(Kamchatka);
+			AsiaCountryList.add(MiddleEast);
+			AsiaCountryList.add(Mongolia);
+			AsiaCountryList.add(Siam);
+			AsiaCountryList.add(Siberia);
+			AsiaCountryList.add(Ural);
+			AsiaCountryList.add(Yakutsk);
 		//Australia
 		Country EasternAustralia = new Country("Eastern Australia");
 		Country Indonesia = new Country("Indonesia");
 		Country NewGuinea = new Country("New Guinea");
 		Country WesternAustralia = new Country("Western Australia");
-		ArrayList<Country> AustraliaCountryList = new ArrayList<Country>() {{
-			add(EasternAustralia);
-			add(Indonesia);
-			add(NewGuinea);
-			add(WesternAustralia);
-		}};
+		ArrayList<Country> AustraliaCountryList = new ArrayList<Country>();
+			AustraliaCountryList.add(EasternAustralia);
+			AustraliaCountryList.add(Indonesia);
+			AustraliaCountryList.add(NewGuinea);
+			AustraliaCountryList.add(WesternAustralia);
+	
 				
 		////Continents
 		Continent NorthAmerica = new Continent ("North America", 5, NorthAmericaCountryList);
@@ -132,352 +138,346 @@ public class Game {
 		
 		//North America
 		
-		ArrayList<Country> adjacentToAlaska = new ArrayList<Country>() {{
-			add(NorthwestTerritory);
-			add(Alaska);
-			add(Kamchatka);
-		}};
+		ArrayList<Country> adjacentToAlaska = new ArrayList<Country>();
+			adjacentToAlaska.add(NorthwestTerritory);
+			adjacentToAlaska.add(Alaska);
+			adjacentToAlaska.add(Kamchatka);
 		Alaska.setAdjacent(adjacentToAlaska);
 		
-		ArrayList<Country> adjacentToAlberta = new ArrayList<Country>() {{
-			add(NorthwestTerritory);
-			add(Alberta);
-			add(Ontario);
-			add(WesternUnitedStates);
-		}};
+		ArrayList<Country> adjacentToAlberta = new ArrayList<Country>();
+			adjacentToAlberta.add(NorthwestTerritory);
+			adjacentToAlberta.add(Alberta);
+			adjacentToAlberta.add(Ontario);
+			adjacentToAlberta.add(WesternUnitedStates);
 		Alberta.setAdjacent(adjacentToAlberta);
 		
-		ArrayList<Country> adjacentToCentralAmerica = new ArrayList<Country>() {{
-			add(WesternUnitedStates);
-			add(EasternUnitedStates);
-			add(Venezuela);
-		}};
+		ArrayList<Country> adjacentToCentralAmerica = new ArrayList<Country>();
+			adjacentToCentralAmerica.add(WesternUnitedStates);
+			adjacentToCentralAmerica.add(EasternUnitedStates);
+			adjacentToCentralAmerica.add(Venezuela);
+
 		CentralAmerica.setAdjacent(adjacentToCentralAmerica);
 		
-		ArrayList<Country> adjacentToEasternUnitedStates = new ArrayList<Country>() {{
-			add(WesternUnitedStates);
-			add(CentralAmerica);
-			add(Ontario);
-			add(Quebec);
-		}};
+		ArrayList<Country> adjacentToEasternUnitedStates = new ArrayList<Country>();
+			adjacentToEasternUnitedStates.add(WesternUnitedStates);
+			adjacentToEasternUnitedStates.add(CentralAmerica);
+			adjacentToEasternUnitedStates.add(Ontario);
+			adjacentToEasternUnitedStates.add(Quebec);
 		EasternUnitedStates.setAdjacent(adjacentToEasternUnitedStates);
 		
-		ArrayList<Country> adjacentToGreenland = new ArrayList<Country>() {{
-			add(NorthwestTerritory);
-			add(Iceland);
-			add(Ontario);
-			add(Quebec);
-		}};
+		ArrayList<Country> adjacentToGreenland = new ArrayList<Country>();
+			adjacentToGreenland.add(NorthwestTerritory);
+			adjacentToGreenland.add(Iceland);
+			adjacentToGreenland.add(Ontario);
+			adjacentToGreenland.add(Quebec);
+
 		Greenland.setAdjacent(adjacentToGreenland);
 		
-		ArrayList<Country> adjacentToNorthwestTerritory = new ArrayList<Country>() {{
-			add(Alaska);
-			add(Alberta);
-			add(Ontario);
-			add(Greenland);
-		}};
+		ArrayList<Country> adjacentToNorthwestTerritory = new ArrayList<Country>();
+			adjacentToNorthwestTerritory.add(Alaska);
+			adjacentToNorthwestTerritory.add(Alberta);
+			adjacentToNorthwestTerritory.add(Ontario);
+			adjacentToNorthwestTerritory.add(Greenland);
+
 		NorthwestTerritory.setAdjacent(adjacentToNorthwestTerritory);
 		
-		ArrayList<Country> adjacentToOntario = new ArrayList<Country>() {{
-			add(NorthwestTerritory);
-			add(Alberta);
-			add(Quebec);
-			add(Greenland);
-			add(WesternUnitedStates);
-			add(EasternUnitedStates);
-		}};
+		ArrayList<Country> adjacentToOntario = new ArrayList<Country>();
+			adjacentToOntario.add(NorthwestTerritory);
+			adjacentToOntario.add(Alberta);
+			adjacentToOntario.add(Quebec);
+			adjacentToOntario.add(Greenland);
+			adjacentToOntario.add(WesternUnitedStates);
+			adjacentToOntario.add(EasternUnitedStates);
+
 		Ontario.setAdjacent(adjacentToOntario);
 		
-		ArrayList<Country> adjacentToQuebec = new ArrayList<Country>() {{
-			add(Ontario);
-			add(Greenland);
-			add(EasternUnitedStates);
-		}};
+		ArrayList<Country> adjacentToQuebec = new ArrayList<Country>();
+			adjacentToQuebec.add(Ontario);
+			adjacentToQuebec.add(Greenland);
+			adjacentToQuebec.add(EasternUnitedStates);
+
 		Quebec.setAdjacent(adjacentToQuebec);
 		
-		ArrayList<Country> adjacentToWesternUnitedStates = new ArrayList<Country>() {{
-			add(CentralAmerica);
-			add(Ontario);
-			add(EasternUnitedStates);
-			add(Alberta);
-		}};
+		ArrayList<Country> adjacentToWesternUnitedStates = new ArrayList<Country>();
+			adjacentToWesternUnitedStates.add(CentralAmerica);
+			adjacentToWesternUnitedStates.add(Ontario);
+			adjacentToWesternUnitedStates.add(EasternUnitedStates);
+			adjacentToWesternUnitedStates.add(Alberta);
+
 		WesternUnitedStates.setAdjacent(adjacentToWesternUnitedStates);
 		
 		//South America
 		
-		ArrayList<Country> adjacentToArgentina = new ArrayList<Country>() {{
-			add(Brazil);
-			add(Peru);
-		}};
+		ArrayList<Country> adjacentToArgentina = new ArrayList<Country>();
+			adjacentToArgentina.add(Brazil);
+			adjacentToArgentina.add(Peru);
+			
 		Argentina.setAdjacent(adjacentToArgentina);
 		
-		ArrayList<Country> adjacentToBrazil = new ArrayList<Country>() {{
-			add(Argentina);
-			add(Peru);
-			add(Venezuela);
-			add(NorthAfrica);
-		}};
+		ArrayList<Country> adjacentToBrazil = new ArrayList<Country>();
+			adjacentToBrazil.add(Argentina);
+			adjacentToBrazil.add(Peru);
+			adjacentToBrazil.add(Venezuela);
+			adjacentToBrazil.add(NorthAfrica);
+
 		Brazil.setAdjacent(adjacentToBrazil);
 		
-		ArrayList<Country> adjacentToPeru = new ArrayList<Country>() {{
-			add(Argentina);
-			add(Brazil);
-			add(Venezuela);
-		}};
+		ArrayList<Country> adjacentToPeru = new ArrayList<Country>();
+			adjacentToPeru.add(Argentina);
+			adjacentToPeru.add(Brazil);
+			adjacentToPeru.add(Venezuela);
 		Peru.setAdjacent(adjacentToPeru);
 		
-		ArrayList<Country> adjacentToVenezuela = new ArrayList<Country>() {{
-			add(Argentina);
-			add(Brazil);
-			add(Peru);
-			add(CentralAmerica);
-		}};
+		ArrayList<Country> adjacentToVenezuela = new ArrayList<Country>();
+			adjacentToVenezuela.add(Argentina);
+			adjacentToVenezuela.add(Brazil);
+			adjacentToVenezuela.add(Peru);
+			adjacentToVenezuela.add(CentralAmerica);
+
 		Venezuela.setAdjacent(adjacentToVenezuela);
 		
 		//Europe
 		
-		ArrayList<Country> adjacentToGreatBritain = new ArrayList<Country>() {{
-			add(Iceland);
-			add(Scandinavia);
-			add(NorthernEurope);
-			add(WesternEurope);
-		}};
+		ArrayList<Country> adjacentToGreatBritain = new ArrayList<Country>();
+			adjacentToGreatBritain.add(Iceland);
+			adjacentToGreatBritain.add(Scandinavia);
+			adjacentToGreatBritain.add(NorthernEurope);
+			adjacentToGreatBritain.add(WesternEurope);
+
 		GreatBritain.setAdjacent(adjacentToGreatBritain);
 		
-		ArrayList<Country> adjacentToIceland = new ArrayList<Country>() {{
-			add(Greenland);
-			add(GreatBritain);
-			add(Scandinavia);
-		}};
+		ArrayList<Country> adjacentToIceland = new ArrayList<Country>();
+			adjacentToIceland.add(Greenland);
+			adjacentToIceland.add(GreatBritain);
+			adjacentToIceland.add(Scandinavia);
+
 		Iceland.setAdjacent(adjacentToIceland);
 		
-		ArrayList<Country> adjacentToNorthernEurope = new ArrayList<Country>() {{
-			add(WesternEurope);
-			add(SouthernEurope);
-			add(Ukraine);
-			add(Scandinavia);
-			add(GreatBritain);
-		}};
+		ArrayList<Country> adjacentToNorthernEurope = new ArrayList<Country>();
+			adjacentToNorthernEurope.add(WesternEurope);
+			adjacentToNorthernEurope.add(SouthernEurope);
+			adjacentToNorthernEurope.add(Ukraine);
+			adjacentToNorthernEurope.add(Scandinavia);
+			adjacentToNorthernEurope.add(GreatBritain);
+
 		NorthernEurope.setAdjacent(adjacentToNorthernEurope);
 		
-		ArrayList<Country> adjacentToScandinavia = new ArrayList<Country>() {{
-			add(Iceland);
-			add(GreatBritain);
-			add(NorthernEurope);
-			add(Ukraine);
-		}};
+		ArrayList<Country> adjacentToScandinavia = new ArrayList<Country>();
+			adjacentToScandinavia.add(Iceland);
+			adjacentToScandinavia.add(GreatBritain);
+			adjacentToScandinavia.add(NorthernEurope);
+			adjacentToScandinavia.add(Ukraine);
 		Scandinavia.setAdjacent(adjacentToScandinavia);
 		
-		ArrayList<Country> adjacentToSouthernEurope = new ArrayList<Country>() {{
-			add(WesternEurope);
-			add(NorthernEurope);
-			add(Ukraine);
-			add(NorthAfrica);
-			add(Egypt);
-			add(MiddleEast);
-		}};
+		ArrayList<Country> adjacentToSouthernEurope = new ArrayList<Country>();
+			adjacentToSouthernEurope.add(WesternEurope);
+			adjacentToSouthernEurope.add(NorthernEurope);
+			adjacentToSouthernEurope.add(Ukraine);
+			adjacentToSouthernEurope.add(NorthAfrica);
+			adjacentToSouthernEurope.add(Egypt);
+			adjacentToSouthernEurope.add(MiddleEast);
+
 		SouthernEurope.setAdjacent(adjacentToSouthernEurope);
 		
-		ArrayList<Country> adjacentToUkraine = new ArrayList<Country>() {{
-			add(Scandinavia);
-			add(NorthernEurope);
-			add(SouthernEurope);
-			add(Ural);
-			add(Afghanistan);
-			add(MiddleEast);
-		}};
+		ArrayList<Country> adjacentToUkraine = new ArrayList<Country>();
+			adjacentToUkraine.add(Scandinavia);
+			adjacentToUkraine.add(NorthernEurope);
+			adjacentToUkraine.add(SouthernEurope);
+			adjacentToUkraine.add(Ural);
+			adjacentToUkraine.add(Afghanistan);
+			adjacentToUkraine.add(MiddleEast);
+
 		Ukraine.setAdjacent(adjacentToUkraine);
 		
-		ArrayList<Country> adjacentToWesternEurope = new ArrayList<Country>() {{
-			add(GreatBritain);
-			add(NorthernEurope);
-			add(SouthernEurope);
-		}};
+		ArrayList<Country> adjacentToWesternEurope = new ArrayList<Country>();
+			adjacentToWesternEurope.add(GreatBritain);
+			adjacentToWesternEurope.add(NorthernEurope);
+			adjacentToWesternEurope.add(SouthernEurope);
+
 		WesternEurope.setAdjacent(adjacentToWesternEurope);
 		
 		//Africa
 		
-		ArrayList<Country> adjacentToCongo = new ArrayList<Country>() {{
-			add(NorthAfrica);
-			add(EastAfrica);
-			add(SouthAfrica);
-		}};
+		ArrayList<Country> adjacentToCongo = new ArrayList<Country>();
+			adjacentToCongo.add(NorthAfrica);
+			adjacentToCongo.add(EastAfrica);
+			adjacentToCongo.add(SouthAfrica);
+
 		Congo.setAdjacent(adjacentToCongo);
 		
-		ArrayList<Country> adjacentToEastAfrica = new ArrayList<Country>() {{
-			add(Egypt);
-			add(NorthAfrica);
-			add(Congo);
-			add(SouthAfrica);
-			add(Madagascar);
-			add(MiddleEast);
-		}};
+		ArrayList<Country> adjacentToEastAfrica = new ArrayList<Country>();
+			adjacentToEastAfrica .add(Egypt);
+			adjacentToEastAfrica .add(NorthAfrica);
+			adjacentToEastAfrica .add(Congo);
+			adjacentToEastAfrica .add(SouthAfrica);
+			adjacentToEastAfrica .add(Madagascar);
+			adjacentToEastAfrica .add(MiddleEast);
+
 		EastAfrica.setAdjacent(adjacentToEastAfrica);
 		
-		ArrayList<Country> adjacentToEgypt = new ArrayList<Country>() {{
-			add(NorthAfrica);
-			add(EastAfrica);
-			add(SouthernEurope);
-			add(MiddleEast);
-		}};
+		ArrayList<Country> adjacentToEgypt = new ArrayList<Country>();
+			adjacentToEgypt.add(NorthAfrica);
+			adjacentToEgypt.add(EastAfrica);
+			adjacentToEgypt.add(SouthernEurope);
+			adjacentToEgypt.add(MiddleEast);
+
 		Egypt.setAdjacent(adjacentToEgypt);
 		
-		ArrayList<Country> adjacentToMadagascar = new ArrayList<Country>() {{
-			add(SouthAfrica);
-			add(EastAfrica);
-		}};
+		ArrayList<Country> adjacentToMadagascar = new ArrayList<Country>();
+			adjacentToMadagascar.add(SouthAfrica);
+			adjacentToMadagascar.add(EastAfrica);
+
 		Madagascar.setAdjacent(adjacentToMadagascar);
 		
-		ArrayList<Country> adjacentToNorthAfrica = new ArrayList<Country>() {{
-			add(SouthernEurope);
-			add(Egypt);
-			add(EastAfrica);
-			add(Congo);
-			add(Brazil);
-		}};
+		ArrayList<Country> adjacentToNorthAfrica = new ArrayList<Country>();
+			adjacentToNorthAfrica.add(SouthernEurope);
+			adjacentToNorthAfrica.add(Egypt);
+			adjacentToNorthAfrica.add(EastAfrica);
+			adjacentToNorthAfrica.add(Congo);
+			adjacentToNorthAfrica.add(Brazil);
+	
 		NorthAfrica.setAdjacent(adjacentToNorthAfrica);
 		
-		ArrayList<Country> adjacentToSouthAfrica = new ArrayList<Country>() {{
-			add(Congo);
-			add(EastAfrica);
-			add(Madagascar);
-		}};
+		ArrayList<Country> adjacentToSouthAfrica = new ArrayList<Country>();
+			adjacentToSouthAfrica.add(Congo);
+			adjacentToSouthAfrica.add(EastAfrica);
+			adjacentToSouthAfrica.add(Madagascar);
+			
 		SouthAfrica.setAdjacent(adjacentToSouthAfrica);
 		
 		//Asia
 		
-		ArrayList<Country> adjacentToChina = new ArrayList<Country>() {{
-			add(Siam);
-			add(India);
-			add(Ural);
-			add(Siberia);
-			add(Mongolia);
-		}};
+		ArrayList<Country> adjacentToChina = new ArrayList<Country>();
+			adjacentToChina.add(Siam);
+			adjacentToChina.add(India);
+			adjacentToChina.add(Ural);
+			adjacentToChina.add(Siberia);
+			adjacentToChina.add(Mongolia);
+
 		China.setAdjacent(adjacentToChina);
 		
-		ArrayList<Country> adjacentToIndia = new ArrayList<Country>() {{
-			add(Siam);
-			add(China);
-			add(MiddleEast);
-			add(Afghanistan);
-		}};
+		ArrayList<Country> adjacentToIndia = new ArrayList<Country>();
+			adjacentToIndia.add(Siam);
+			adjacentToIndia.add(China);
+			adjacentToIndia.add(MiddleEast);
+			adjacentToIndia.add(Afghanistan);
+
 		India.setAdjacent(adjacentToIndia);
 		
-		ArrayList<Country> adjacentToIrkutsk = new ArrayList<Country>() {{
-			add(Mongolia);
-			add(Siberia);
-			add(Yakutsk);
-			add(Kamchatka);
-		}};
+		ArrayList<Country> adjacentToIrkutsk = new ArrayList<Country>();
+			adjacentToIrkutsk.add(Mongolia);
+			adjacentToIrkutsk.add(Siberia);
+			adjacentToIrkutsk.add(Yakutsk);
+			adjacentToIrkutsk.add(Kamchatka);
+
 		Irkutsk.setAdjacent(adjacentToIrkutsk);
 		
-		ArrayList<Country> adjacentToJapan = new ArrayList<Country>() {{
-			add(Mongolia);
-			add(Kamchatka);
-		}};
+		ArrayList<Country> adjacentToJapan = new ArrayList<Country>();
+			adjacentToJapan.add(Mongolia);
+			adjacentToJapan.add(Kamchatka);
+
 		Japan.setAdjacent(adjacentToJapan);
 		
-		ArrayList<Country> adjacentToKamchatka = new ArrayList<Country>() {{
-			add(Japan);
-			add(Mongolia);
-			add(Irkutsk);
-			add(Yakutsk);
-		}};
+		ArrayList<Country> adjacentToKamchatka = new ArrayList<Country>();
+			adjacentToKamchatka.add(Japan);
+			adjacentToKamchatka.add(Mongolia);
+			adjacentToKamchatka.add(Irkutsk);
+			adjacentToKamchatka.add(Yakutsk);
+
 		Kamchatka.setAdjacent(adjacentToKamchatka);
 		
-		ArrayList<Country> adjacentToMiddleEast = new ArrayList<Country>() {{
-			add(India);
-			add(Afghanistan);
-			add(Ukraine);
-			add(SouthernEurope);
-			add(Egypt);
-		}};
+		ArrayList<Country> adjacentToMiddleEast = new ArrayList<Country>();
+			adjacentToMiddleEast.add(India);
+			adjacentToMiddleEast.add(Afghanistan);
+			adjacentToMiddleEast.add(Ukraine);
+			adjacentToMiddleEast.add(SouthernEurope);
+			adjacentToMiddleEast.add(Egypt);
+
 		MiddleEast.setAdjacent(adjacentToMiddleEast);
 		
-		ArrayList<Country> adjacentToMongolia = new ArrayList<Country>() {{
-			add(Japan);
-			add(China);
-			add(Siberia);
-			add(Irkutsk);
-			add(Kamchatka);
-		}};
+		ArrayList<Country> adjacentToMongolia = new ArrayList<Country>();
+			adjacentToMongolia.add(Japan);
+			adjacentToMongolia.add(China);
+			adjacentToMongolia.add(Siberia);
+			adjacentToMongolia.add(Irkutsk);
+			adjacentToMongolia.add(Kamchatka);
+
 		Mongolia.setAdjacent(adjacentToMongolia);
 		
-		ArrayList<Country> adjacentToSiam = new ArrayList<Country>() {{
-			add(China);
-			add(India);
-			add(Indonesia);
-		}};
+		ArrayList<Country> adjacentToSiam = new ArrayList<Country>();
+			adjacentToSiam.add(China);
+			adjacentToSiam.add(India);
+			adjacentToSiam.add(Indonesia);
+
 		Siam.setAdjacent(adjacentToSiam);
 		
-		ArrayList<Country> adjacentToSiberia = new ArrayList<Country>() {{
-			add(Ural);
-			add(China);
-			add(Mongolia);
-			add(Irkutsk);
-			add(Yakutsk);
-			
-		}};
+		ArrayList<Country> adjacentToSiberia = new ArrayList<Country>();
+			adjacentToSiberia.add(Ural);
+			adjacentToSiberia.add(China);
+			adjacentToSiberia.add(Mongolia);
+			adjacentToSiberia.add(Irkutsk);
+			adjacentToSiberia.add(Yakutsk);
+				
+
 		Siberia.setAdjacent(adjacentToSiberia);
 		
-		ArrayList<Country> adjacentToUral = new ArrayList<Country>() {{
-			add(Ural);
-			add(Afghanistan);
-			add(China);
-			add(Mongolia);
-			add(Irkutsk);
-			add(Yakutsk);
-		}};
+		ArrayList<Country> adjacentToUral = new ArrayList<Country>();
+			adjacentToUral.add(Ural);
+			adjacentToUral.add(Afghanistan);
+			adjacentToUral.add(China);
+			adjacentToUral.add(Mongolia);
+			adjacentToUral.add(Irkutsk);
+			adjacentToUral.add(Yakutsk);
+
 		Ural.setAdjacent(adjacentToUral);
 		
-		ArrayList<Country> adjacentToYakutsk = new ArrayList<Country>() {{
-			add(Siberia);
-			add(Irkutsk);
-			add(Kamchatka);
-		}};
+		ArrayList<Country> adjacentToYakutsk = new ArrayList<Country>();
+			adjacentToYakutsk.add(Siberia);
+			adjacentToYakutsk.add(Irkutsk);
+			adjacentToYakutsk.add(Kamchatka);
+
 		Yakutsk.setAdjacent(adjacentToYakutsk);
 		
-		ArrayList<Country> adjacentToAfghanistan = new ArrayList<Country>() {{
-			add(MiddleEast);
-			add(India);
-			add(China);
-			add(Ural);
-			add(Ukraine);
-		}};
+		ArrayList<Country> adjacentToAfghanistan = new ArrayList<Country>();
+			adjacentToAfghanistan.add(MiddleEast);
+			adjacentToAfghanistan.add(India);
+			adjacentToAfghanistan.add(China);
+			adjacentToAfghanistan.add(Ural);
+			adjacentToAfghanistan.add(Ukraine);
 		
 		Afghanistan.setAdjacent(adjacentToAfghanistan);
 		
 		
 		//Australia
 		
-		ArrayList<Country> adjacentToEasternAustralia = new ArrayList<Country>() {{
-			add(WesternAustralia);
-			add(NewGuinea);
-		}};
+		ArrayList<Country> adjacentToEasternAustralia = new ArrayList<Country>();
+			adjacentToEasternAustralia .add(WesternAustralia);
+			adjacentToEasternAustralia .add(NewGuinea);
+
 		EasternAustralia.setAdjacent(adjacentToEasternAustralia);
 		
-		ArrayList<Country> adjacentToIndonesia = new ArrayList<Country>() {{
-			add(Siam);
-			add(NewGuinea);
-			add(WesternAustralia);
-		}};
+		ArrayList<Country> adjacentToIndonesia = new ArrayList<Country>();
+			adjacentToIndonesia.add(Siam);
+			adjacentToIndonesia.add(NewGuinea);
+			adjacentToIndonesia.add(WesternAustralia);
+
 		Indonesia.setAdjacent(adjacentToIndonesia);
 		
-		ArrayList<Country> adjacentToNewGuinea = new ArrayList<Country>() {{
-			add(EasternAustralia);
-			add(Indonesia);
-			add(WesternAustralia);
-		}};
+		ArrayList<Country> adjacentToNewGuinea = new ArrayList<Country>();
+			adjacentToNewGuinea.add(EasternAustralia);
+			adjacentToNewGuinea.add(Indonesia);
+			adjacentToNewGuinea.add(WesternAustralia);
+
 		NewGuinea.setAdjacent(adjacentToNewGuinea);
 		
-		ArrayList<Country> adjacentToWesternAustralia = new ArrayList<Country>() {{
-			add(EasternAustralia);
-			add(Indonesia);
-			add(NewGuinea);
-		}};
+		ArrayList<Country> adjacentToWesternAustralia = new ArrayList<Country>();
+			adjacentToWesternAustralia.add(EasternAustralia);
+			adjacentToWesternAustralia.add(Indonesia);
+			adjacentToWesternAustralia.add(NewGuinea);
+
 		WesternAustralia.setAdjacent(adjacentToWesternAustralia);
 		
-		//Cards and Deck
+		////////////ADD ADD////////////
 		
 		List<Card> cardList = new ArrayList<Card>();
 		cardList.add(new Card("Wild Card", WildCard));
@@ -670,7 +670,7 @@ public class Game {
 		}
 		
 		
-		
+
 		//All armies have been placed and its time to start the game
 		
 		//initialArmyPlacement(playerList.get(0) , Argentina); //testing lines
@@ -686,13 +686,29 @@ public class Game {
 		System.out.println(playerList.get(0).getArmy());
 		
 		System.out.println("\nTime to start the game!");
+		
+	
+
+		//int playerIndex = 0;
+
+		
 		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
 			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!");
+			
+			//Set timer for player to have 30 second on each move. 
+			Timer time = new Timer();
+			
+			time.schedule(new timeCheck(),0,30*1000);
+			//playerIndex = x;
+			
+			//long start = System.currentTimeMillis();
 			
 			//Credits
 			//Getting and placing new armies
 			//Attacking
 			//Fortifying your position
+			
+			//while (System.currentTimeMillis() - start < 30) {
 			
 			//Credits
 			System.out.println("Do you want to buy, use, or transfer credits?");
@@ -833,6 +849,8 @@ public class Game {
 			//post a Tweet after every turn
 			//newTwitterAcc.updateTweet(playerList.get(x).getName() + " now has " + playerList.get(x).numOfCountriesHeld() + " territories!"); 
 		}
+		//}
+		
 		
 		//post a Tweet at the end of the game
 		/*for(int u=0;u < numberOfPlayers ; u=u+1){
@@ -843,7 +861,23 @@ public class Game {
 		sc.close();
 	}
 	
+		static class timeCheck extends TimerTask{
+			boolean timecheck;
+			
+			public timeCheck() {
+				
+			}
+			public void run() {
+				if(timecheck == true) {
+					System.out.println("Time's Up! ");
+					//player end
+					cancel();
+				}
+			}
+		}
 	
+
+
 	public static void attack (Player attackingPlayer, Player attackedPlayer, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		Country attackingCountry;
@@ -1050,8 +1084,10 @@ public class Game {
 	
 	public static boolean askPlayerForYesOrNo(Scanner input) {
 		boolean firstTime = true;
+
 		while (true) {
 			input.reset();
+
 			String line = input.nextLine();
 			
 			if (line.toLowerCase().equals("y")) {
@@ -1067,6 +1103,9 @@ public class Game {
 			firstTime = false;
 		}
 	}
+	
+
+	
 	
 	public static void givePlayerRandomCard(Player player, List<Card> list) {
 		if(list.size() != 0) {
@@ -1320,5 +1359,7 @@ public class Game {
 						+ " with " + continent6.getCountries().get(x).getArmy() + " armies");
 			}
 		}
+		
 	}
+	
 }

@@ -1,4 +1,3 @@
-
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class TwitterRG {
-	
 	Properties propRG = new Properties();
 	InputStream input = null;
 	String[] secretData = new String[4];
@@ -68,5 +66,4 @@ public class TwitterRG {
 			e.printStackTrace();
 		}
 	}
-
 }

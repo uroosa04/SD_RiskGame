@@ -2,10 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>RiskGameSD</groupId>
   <artifactId>RiskGame</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-
-  <dependencies>
+  <version>0.0.1-SNAPSHOT</version>
+  
+   <dependencies>
   	<dependency>
 	    <groupId>junit</groupId>
 	    <artifactId>junit</artifactId>
