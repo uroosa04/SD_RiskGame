@@ -9,6 +9,9 @@ import java.util.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Game {
 	private String InputTime = "";
@@ -554,6 +557,23 @@ public static void main(String[] args) {
 			System.out.println("Please input an appropiate number of players. (2, 3, 4, 5, or 6)");
 			numberOfPlayers = askPlayerForInt(sc);
 		}
+		
+		//start chatbot
+		System.out.println("You are able to chat during the game. Number of players in chat is 3.");
+		// TODO Initialize Api Context
+    	ApiContextInitializer.init();
+    	
+        // TODO Instantiate Telegram Bots API
+    	TelegramBotsApi botsApi = new TelegramBotsApi();
+    	
+        // TODO Register our bot
+    	try {
+            botsApi.registerBot(new Bot());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    
+		
 		
 		
 		//connect Twitter to game
