@@ -32,6 +32,7 @@ public class botgroup extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         // return bot token
-        return "-265217417";
+        //to TA's: we will provide the API key via email
+        return null;
     }
 }
