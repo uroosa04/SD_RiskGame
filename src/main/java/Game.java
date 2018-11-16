@@ -560,15 +560,18 @@ public static void main(String[] args) {
 		
 		//start chatbot
 		System.out.println("You are able to chat during the game. Number of players in chat is 3.");
-		// TODO Initialize Api Context
+		// Initialize Api Context
     	ApiContextInitializer.init();
     	
-        // TODO Instantiate Telegram Bots API
+        // Instantiate Telegram Bots API
     	TelegramBotsApi botsApi = new TelegramBotsApi();
     	
-        // TODO Register our bot
+        // Register our bot
     	try {
             botsApi.registerBot(new Bot());
+            botsApi.registerBot(new botTwo());
+            botsApi.registerBot(new botThree());
+            //botsApi.registerBot(new botgroup());
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -709,8 +712,7 @@ public static void main(String[] args) {
 		
 	
 
-		//Player has 30 second to make the move
-		//player response will give them 30 second to complete the action
+		//int playerIndex = 0;
 
 		
 		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
@@ -722,14 +724,14 @@ public static void main(String[] args) {
 			time.schedule(new timeCheck(),0,30*1000);
 			//playerIndex = x;
 			
-			long start = System.currentTimeMillis();
+			//long start = System.currentTimeMillis();
 			
 			//Credits
 			//Getting and placing new armies
 			//Attacking
 			//Fortifying your position
 			
-			while (System.currentTimeMillis() - start < 30) {
+			//while (System.currentTimeMillis() - start < 30) {
 			
 			//Credits
 			System.out.println("Do you want to buy, use, or transfer credits?");
@@ -737,7 +739,6 @@ public static void main(String[] args) {
 			if (playerAnswer) {
 				System.out.println("What would you like to do? (Buy, Use, Transfer)");
 				while (true) {
-					 start = System.currentTimeMillis();
 					String playerAnswerForCredits = sc.nextLine();
 					if (playerAnswerForCredits.toLowerCase() == "buy") {
 						System.out.println("How many credits would you like to buy?");
@@ -747,7 +748,6 @@ public static void main(String[] args) {
 						break;
 					}
 					else if (playerAnswerForCredits.toLowerCase() == "use") {
-						start = System.currentTimeMillis();
 						System.out.println("What would you like to buy? (undo,card)");
 						while (true) {
 							String itemToBuy = sc.nextLine();
@@ -764,7 +764,6 @@ public static void main(String[] args) {
 						}
 					}
 					else if (playerAnswerForCredits.toLowerCase() == "transfer") {
-						start = System.currentTimeMillis();
 						System.out.println("Who would you like to give credits to?");
 						while (true) {
 							Player playerToTransfer = askPlayerForPlayer(sc, playerList);
@@ -810,7 +809,6 @@ public static void main(String[] args) {
 				printCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 				System.out.println("\nType the country's name to place an army");
 				while (true) {
-					 start = System.currentTimeMillis();
 					selectedCountry = askPlayerForCountry(sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 					if (selectedCountry.getOwner() == playerList.get(x)) {
 						break;
@@ -827,7 +825,6 @@ public static void main(String[] args) {
 			System.out.println("Do you want to attack? (type Y or N)");
 			playerAnswer = askPlayerForYesOrNo(sc);
 			while (playerAnswer == true) {
-				 start = System.currentTimeMillis();
 				//Attack
 				Player selectedPlayer = null;
 				if (numberOfPlayers > 2) {
@@ -862,7 +859,6 @@ public static void main(String[] args) {
 			System.out.println("Do you want to fortify? (type Y or N)");
 			playerAnswer = askPlayerForYesOrNo(sc);
 			if (playerAnswer == true) {
-				 start = System.currentTimeMillis();
 				//Fortify
 			}
 			
@@ -876,7 +872,7 @@ public static void main(String[] args) {
 			//post a Tweet after every turn
 			//newTwitterAcc.updateTweet(playerList.get(x).getName() + " now has " + playerList.get(x).numOfCountriesHeld() + " territories!"); 
 		}
-		}
+		//}
 		
 		
 		//post a Tweet at the end of the game
