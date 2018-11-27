@@ -1,11 +1,9 @@
-
-
+package Testing;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-
-public class TestCountry {
+public class TestDice {
 
 	@Test
 	public void test() {

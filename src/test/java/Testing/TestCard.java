@@ -1,6 +1,10 @@
+package Testing;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import RSG.Card;
+import RSG.Country;
 
 public class TestCard {
 	Country test = new Country("Peru");

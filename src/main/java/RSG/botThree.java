@@ -1,9 +1,10 @@
+package RSG;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class Bot extends TelegramLongPollingBot {
+public class botThree extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
     	// We check if the update has a message and the message has text
@@ -26,13 +27,13 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         // Return bot username
-        return "UroosaBot";
+        return "GioRSG_bot";
     }
 
     @Override
     public String getBotToken() {
         // return bot token
-        //TO TA's, the API key has not been posted here to keep is confidential. You may request this through email.
+        //to TA's: we will provide the API key via email
         return null;
     }
 }
