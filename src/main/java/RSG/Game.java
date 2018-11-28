@@ -1026,6 +1026,7 @@ public static void main(String[] args) {
 		if (countrySuccesfullyGained) {
 			attackedCountry.setOwner(attackedPlayer);
 		}
+		attackingPlayer.removeUndo();
 		System.out.println(attackingPlayer.getName() + "Attack has been undone.");
 	}
 	
@@ -1086,6 +1087,7 @@ public static void main(String[] args) {
 	public static void undoFortify(Player player, Country fromCountry, Country toCountry, int armiesToMove) {
 		fromCountry.increaseArmy(armiesToMove);
 		toCountry.decreaseArmy(armiesToMove);
+		player.removeUndo();
 		System.out.println(player.getName() + ", fortify has been undone!");
 	}
 	
