@@ -901,8 +901,15 @@ public static void main(String[] args) {
 
 	public static void attack (Player attackingPlayer, Player attackedPlayer, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
+		
 		Country attackingCountry;
 		Country attackedCountry;
+		int attackingDice;
+		int attackedDice;
+		int[] attackingDiceRolls = {0,0,0};
+		int[] attackedDiceRolls = {0,0};
+		Dice dice = new Dice();
+		
 		System.out.println(attackingPlayer.getName() + ", From which country are you attaking?");
 		while (true) {
 			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
@@ -912,11 +919,69 @@ public static void main(String[] args) {
 		}
 		System.out.println(attackingPlayer.getName() + ", Which country are you attaking?");
 		while (true) {
-			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
+			attackedCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
 					continent4, continent5, continent6);
 			break;
 		}
 		attackingCountry.setStatusToAttacked();
+		
+		System.out.println(attackingPlayer.getName() + ", How many dice are you rolling?");
+		while (true) {
+			attackingDice = askPlayerForInt(input);
+			if (attackingDice < attackingCountry.getArmy() && attackingDice <= 3) {
+				break;
+			}
+			else {
+				System.out.println("Invalid number, please try again.");
+			}
+		}
+		System.out.println(attackedPlayer.getName() + ", How many dice are you rolling?");
+		while (true) {
+			attackedDice = askPlayerForInt(input);
+			if (attackedDice <= attackedCountry.getArmy() && attackedDice <= 2) {
+				break;
+			}
+			else {
+				System.out.println("Invalid number, please try again.");
+			}
+		}
+		
+		for (int x = 0; x < attackingDice ; x++) {
+			dice.roll();
+			attackingDiceRolls[x] = dice.getDice();
+		}
+		
+		for (int x = 0; x < attackedDice ; x++) {
+			dice.roll();
+			attackedDiceRolls[x] = dice.getDice();
+		}
+		
+		Arrays.sort(attackingDiceRolls);
+		Arrays.sort(attackedDiceRolls);
+		
+		System.out.println("Dice have been rolled:");
+		
+		for (int x = 0; x < Math.min(attackingDice, attackedDice) ; x++) {
+			if (attackingDiceRolls[x] > attackedDiceRolls[x]) {
+				System.out.println("Attacker wins (" + attackingDiceRolls[x] + " to " + attackedDiceRolls[x] + ") "
+						+ attackedPlayer.getName() + " loses an army.");
+				attackedCountry.decreaseArmy(1);
+			}
+			else {
+				System.out.println("Attacked player wins (" + attackedDiceRolls[x] + " to " + attackingDiceRolls[x] + ") "
+						+ attackingPlayer.getName() + " loses an army.");
+				attackingCountry.decreaseArmy(1);
+			}
+		}
+		
+		if (attackedCountry.getArmy() == 0) {
+			System.out.println(attackingPlayer.getName() + " has completed defeted " + attackedPlayer.getName() + ".");
+			System.out.println(attackedCountry.getName() + " now belongs to " + attackingPlayer.getName());
+			attackedCountry.setOwner(attackingPlayer);
+			attackedCountry.increaseArmy(1);
+			attackingCountry.decreaseArmy(1);
+		}
+		
 	}
 	
 	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
