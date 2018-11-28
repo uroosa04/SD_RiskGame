@@ -803,6 +803,7 @@ public static void main(String[] args) {
 				fortify(playerList.get(x), sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 			}
 			
+			//check for end of game
 			if (playerList.get(x).getCountries().size() == 42) {
 				x = numberOfPlayers;
 				System.out.println("Congratulations " + playerList.get(x).getName() + ", you won the game!");
@@ -839,7 +840,7 @@ public static void main(String[] args) {
 				}
 			}
 		}
-	
+		
 	public static void creditStore (Player player, Scanner sc, List<Player> playerList, List<Card> cardList) {
 
 		System.out.println("What would you like to do? (Buy, Use, Transfer)");
@@ -858,7 +859,7 @@ public static void main(String[] args) {
 					String itemToBuy = sc.nextLine();
 					if (itemToBuy.toLowerCase() == "undo") {
 						player.addUndo();
-						System.out.println("Your new undio total is " + player.getUndo() + ".");
+						System.out.println("Your new undo total is " + player.getUndo() + ".");
 						break;
 					}
 					if (itemToBuy.toLowerCase() == "card") {
@@ -909,6 +910,11 @@ public static void main(String[] args) {
 		int[] attackingDiceRolls = {0,0,0};
 		int[] attackedDiceRolls = {0,0};
 		Dice dice = new Dice();
+		boolean countrySuccesfullyGained = false;
+		int attackingCountryOriginalAmries;
+		int attackedCountryOriginalAmries;
+		boolean playerAnswer = false;
+		
 		
 		System.out.println(attackingPlayer.getName() + ", From which country are you attaking?");
 		while (true) {
@@ -924,6 +930,9 @@ public static void main(String[] args) {
 			break;
 		}
 		attackingCountry.setStatusToAttacked();
+		
+		attackingCountryOriginalAmries = attackingCountry.getArmy();
+		attackedCountryOriginalAmries = attackedCountry.getArmy();
 		
 		System.out.println(attackingPlayer.getName() + ", How many dice are you rolling?");
 		while (true) {
@@ -975,6 +984,7 @@ public static void main(String[] args) {
 		}
 		
 		if (attackedCountry.getArmy() == 0) {
+			countrySuccesfullyGained = true;
 			System.out.println(attackingPlayer.getName() + " has completed defeted " + attackedPlayer.getName() + ".");
 			System.out.println(attackedCountry.getName() + " now belongs to " + attackingPlayer.getName());
 			attackedCountry.setOwner(attackingPlayer);
@@ -982,6 +992,27 @@ public static void main(String[] args) {
 			attackingCountry.decreaseArmy(1);
 		}
 		
+		System.out.println(attackingPlayer.getName() + ", would you like to undo?");
+		playerAnswer = askPlayerForYesOrNo(input);
+		if (playerAnswer && attackingPlayer.getUndo() > 0) {
+			undoAttack (attackingPlayer, attackedPlayer, attackingCountry, attackedCountry,
+					attackingCountryOriginalAmries, attackedCountryOriginalAmries, countrySuccesfullyGained);
+		}
+		
+		else {
+			System.out.println(attackingPlayer.getName() + ", you dont have enough undos!");
+		}
+		
+	}
+	
+	public static void undoAttack (Player attackingPlayer, Player attackedPlayer, Country attackingCountry, Country attackedCountry, 
+						int attackingCountryOriginalAmries, int attackedCountryOriginalAmries, boolean countrySuccesfullyGained) {
+		attackingCountry.setArmyNumber(attackingCountryOriginalAmries);
+		attackedCountry.setArmyNumber(attackedCountryOriginalAmries);
+		if (countrySuccesfullyGained) {
+			attackedCountry.setOwner(attackedPlayer);
+		}
+		System.out.println(attackingPlayer.getName() + "Attack has been undone.");
 	}
 	
 	public static void fortify(Player player, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
@@ -990,6 +1021,7 @@ public static void main(String[] args) {
 		Country fromCountry;
 		Country toCountry;
 		int armiesToMove = 0;
+		boolean playerAnswer = false;
 		
 		System.out.println(player.getName() + ", From which country are you moving armies?");
 		while (true) {
@@ -1017,6 +1049,22 @@ public static void main(String[] args) {
 		fromCountry.decreaseArmy(armiesToMove);
 		toCountry.increaseArmy(armiesToMove);
 		System.out.println("Armies have been moveed.");
+		
+		System.out.println(player.getName() + ", would you like to undo?");
+		playerAnswer = askPlayerForYesOrNo(input);
+		if (playerAnswer && player.getUndo() > 0) {
+			undoFortify (player, fromCountry, toCountry, armiesToMove);
+		}
+		
+		else {
+			System.out.println(player.getName() + ", you dont have enough undos!");
+		}
+	}
+	
+	public static void undoFortify(Player player, Country fromCountry, Country toCountry, int armiesToMove) {
+		fromCountry.increaseArmy(armiesToMove);
+		toCountry.decreaseArmy(armiesToMove);
+		System.out.println(player.getName() + ", fortify has been undone!");
 	}
 	
 	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
