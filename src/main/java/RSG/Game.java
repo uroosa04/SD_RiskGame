@@ -800,7 +800,7 @@ public static void main(String[] args) {
 			System.out.println("Do you want to fortify? (type Y or N)");
 			playerAnswer = askPlayerForYesOrNo(sc);
 			if (playerAnswer == true) {
-				//Fortify
+				fortify(playerList.get(x), sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 			}
 			
 			if (playerList.get(x).getCountries().size() == 42) {
@@ -982,6 +982,41 @@ public static void main(String[] args) {
 			attackingCountry.decreaseArmy(1);
 		}
 		
+	}
+	
+	public static void fortify(Player player, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
+			Continent continent4, Continent continent5, Continent continent6) {
+		
+		Country fromCountry;
+		Country toCountry;
+		int armiesToMove = 0;
+		
+		System.out.println(player.getName() + ", From which country are you moving armies?");
+		while (true) {
+			fromCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
+					continent4, continent5, continent6);
+			break;
+			
+		}
+		System.out.println(player.getName() + ", Which country are you moving armies to?");
+		while (true) {
+			toCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
+					continent4, continent5, continent6);
+			break;
+		}
+		System.out.println(player.getName() + " ,how many armies?");
+		while (true) {
+			armiesToMove = askPlayerForInt(input);
+			if (armiesToMove < fromCountry.getArmy()) {
+				break;
+			}
+			else {
+				System.out.println("Invalid number, please try again.");
+			}
+		}
+		fromCountry.decreaseArmy(armiesToMove);
+		toCountry.increaseArmy(armiesToMove);
+		System.out.println("Armies have been moveed.");
 	}
 	
 	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
