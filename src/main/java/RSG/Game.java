@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Game {
-	
+	private static Bot chat;
 public static void main(String[] args) {
 	
 		
@@ -564,12 +564,12 @@ public static void main(String[] args) {
     	
         // Instantiate Telegram Bots API
     	TelegramBotsApi botsApi = new TelegramBotsApi();
-    	
+    	chat = new Bot();
         // Register our bot
     	try {
             botsApi.registerBot(new Bot());
-            botsApi.registerBot(new botTwo());
-            botsApi.registerBot(new botThree());
+            //botsApi.registerBot(new botTwo());
+            //botsApi.registerBot(new botThree());
             //botsApi.registerBot(new botgroup());
         } catch (TelegramApiException e) {
             e.printStackTrace();
@@ -613,6 +613,8 @@ public static void main(String[] args) {
 		counter = 0;
 		while (sc.hasNextLine()) {
 			System.out.println("What's Player " + (counter+1) + "s name?");
+			chat.sentMessage("What's Player " + (counter+1) + "s name?");
+			
 			name = sc.next();
 			playerList.add(new Player(name,totalNumberOfArmyPerPlayer));
 			counter++;
