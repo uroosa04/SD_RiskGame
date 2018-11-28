@@ -903,13 +903,20 @@ public static void main(String[] args) {
 			Continent continent4, Continent continent5, Continent continent6) {
 		Country attackingCountry;
 		Country attackedCountry;
-		System.out.println(attackedPlayer.getName() + ", you're being attacketd!");
 		System.out.println(attackingPlayer.getName() + ", From which country are you attaking?");
 		while (true) {
 			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
 					continent4, continent5, continent6);
+			break;
 			
-		}		
+		}
+		System.out.println(attackingPlayer.getName() + ", Which country are you attaking?");
+		while (true) {
+			attackingCountry = askPlayerForCountry(input, continent1, continent2, continent3, 
+					continent4, continent5, continent6);
+			break;
+		}
+		attackingCountry.setStatusToAttacked();
 	}
 	
 	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
@@ -1308,6 +1315,8 @@ public static void main(String[] args) {
 		name.decreaseArmy(1);
 		name.addCountry(country);
 		country.setOwner(name);
+		country.addObserver(name);
+		country.setStatusToIdle();
 		country.increaseArmy(1);
 	}
 	

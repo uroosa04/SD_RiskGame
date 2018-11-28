@@ -1,12 +1,28 @@
 package RSG;
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Country {
+enum Status{
+    ATTACKED, IDLE
+}
+
+public class Country extends Observable{
+	
 	private String name;
 	private int armyNumber;
 	private ArrayList<Country> adjacentCountries;
 	private boolean hasPlayer;
 	private Player owner;
+	Status status;
+	
+	public void setStatusToIdle(){
+        status = Status.IDLE;
+    }
+    public void setStatusToAttacked(){
+        status = Status.ATTACKED;
+        setChanged();
+        notifyObservers();
+    }
 	
 	public Country(String name) {
 		this.name = name;

@@ -1,7 +1,9 @@
 package RSG;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Player {
+public class Player implements Observer {
 	private String name;
 	private int army;
 	private ArrayList<Country> countriesHeld = new ArrayList<Country>();
@@ -14,6 +16,15 @@ public class Player {
 		this.army = army;
 		this.credits = 0;
 		this.undo = 0;
+	}
+	
+	@Override
+    public void update(Observable country, Object arg) {
+		Country countryUnderAttack = (Country) country;
+        if(countryUnderAttack.status == Status.ATTACKED) {
+            System.out.println(name + ", " + countryUnderAttack.getName() + " is under attack.");
+
+        }
 	}
 	
 	public String getName() {
