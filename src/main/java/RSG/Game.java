@@ -843,6 +843,10 @@ public static void main(String[] args) {
 			}
 		}
 		
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// The credit function asks the player if they want to buy, use, or transfer credits, and does the 
+	///// appropriate action. 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void creditStore (Player player, Scanner sc, List<Player> playerList, List<Card> cardList) {
 
 		System.out.println("What would you like to do? (Buy, Use, Transfer)");
@@ -902,6 +906,10 @@ public static void main(String[] args) {
 	
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Attack function for a players turn. Asks for countries involved in the attack as well as how many
+	///// dice each player would like to use. Then determines the outcome.
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void attack (Player attackingPlayer, Player attackedPlayer, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		
@@ -1007,6 +1015,10 @@ public static void main(String[] args) {
 		
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Undo function for the attack function, this reverses everything done during the attack function.
+	///// the player is asked if they want to undo at the end of attacking.
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void undoAttack (Player attackingPlayer, Player attackedPlayer, Country attackingCountry, Country attackedCountry, 
 						int attackingCountryOriginalAmries, int attackedCountryOriginalAmries, boolean countrySuccesfullyGained) {
 		attackingCountry.setArmyNumber(attackingCountryOriginalAmries);
@@ -1017,6 +1029,10 @@ public static void main(String[] args) {
 		System.out.println(attackingPlayer.getName() + "Attack has been undone.");
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// This is the fortify part of the players turn. Asks the player how many armies they want to move
+	///// from one country to another.
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void fortify(Player player, Scanner input, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		
@@ -1063,12 +1079,20 @@ public static void main(String[] args) {
 		}
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Undo function for the fortify function, this reverses everything done during the fortify function.
+	///// the player is asked if they want to undo at the end of fortifying.
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void undoFortify(Player player, Country fromCountry, Country toCountry, int armiesToMove) {
 		fromCountry.increaseArmy(armiesToMove);
 		toCountry.decreaseArmy(armiesToMove);
 		System.out.println(player.getName() + ", fortify has been undone!");
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// This determines whether or not a player can attack another player depending on which countries they 
+	///// both have. This is used when the game asks the player who they want to attack.
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static boolean playerCanAttackPlayer(Player attackingPlayer, Player attackedPlayer) {
 		for (int x=0 ; x < attackingPlayer.getCountries().size() ; x++ ) {
 			for(int y = 0 ; y < attackingPlayer.getCountries().get(x).getAdjacentCountries().size() ; y++) {
@@ -1081,6 +1105,9 @@ public static void main(String[] args) {
 		return false;
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Asks players for valid input for an player name and returns said player
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static Player askPlayerForPlayer (Scanner input, List<Player> playerList) {
 		Player player = null;
 		boolean hasReturned = false;
@@ -1100,6 +1127,10 @@ public static void main(String[] args) {
 		}
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// This function determines how many new armies the player will receive at the beginning of
+	///// their turn depending on what combination of cards they decide to turn in
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static int getNewArmiesFromCards(Player player, Scanner scanner, int numberOfTurnIns) {
 		
 		boolean hasWildCard = false;
@@ -1214,6 +1245,10 @@ public static void main(String[] args) {
 		return 0;
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// checks whether of not the country in the card is owned by the player, this is used
+	///// when calculating the amount of new armies awarded at the beginning of the turn
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static boolean ownedCountryMatchesCard(int[] array , Player player) {
 		for (int x=0 ; x < array.length ; x++) {
 			if (player.getCountries().contains(player.getCards().get(array[x]-1).getCountry())) {
@@ -1223,6 +1258,10 @@ public static void main(String[] args) {
 		return false;
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// This returns whether or not the player has a combination of cards that are available to turn in,
+	///// if this returns a negative, the game does not ask the player if they want to turn in cards.
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static boolean hasCombinationOfCardsToTurnIn(int[] array , Player player) {
 		boolean hasWildCard = false;
 		int infantry = 0;
@@ -1251,6 +1290,9 @@ public static void main(String[] args) {
 		}
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// checks whether of not an int is in the array, this is used when calculating card values
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static boolean intIsInArray(int[] array, int number, int index) {
 		for (int x=0 ; x < array.length ; x++) {
 			if (number == array[x] && index != x) {
@@ -1260,6 +1302,9 @@ public static void main(String[] args) {
 		return false;
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Asks players for valid yes or no and returns a boolean
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static boolean askPlayerForYesOrNo(Scanner input) {
 		boolean firstTime = true;
 
@@ -1282,9 +1327,9 @@ public static void main(String[] args) {
 		}
 	}
 	
-
-	
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Gives players a random card from the deck
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void givePlayerRandomCard(Player player, List<Card> list) {
 		if(list.size() != 0) {
 			int r = (int) (Math.random() * list.size());
@@ -1293,6 +1338,10 @@ public static void main(String[] args) {
 		}
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Gets the number of new armies the player will receive a the beginning of their turn according to
+	///// how many countries and continents they own
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static int getNewArmiesFromCountriesAndContinents(Player player, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		int total = 0;
@@ -1364,6 +1413,10 @@ public static void main(String[] args) {
 		return total;
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Checks whether or not all countries have an owner, this is used in the initial army placement
+	///// at the beginning of the game
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static boolean allCountriesOwned (Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		boolean allOwned = true;
@@ -1400,7 +1453,9 @@ public static void main(String[] args) {
 		return allOwned;
 	}
 	
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Asks players for valid input for an integer and returns said integer
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static int askPlayerForInt(Scanner input) {
 		input.reset();
 		while(!input.hasNextInt()) {
@@ -1411,6 +1466,10 @@ public static void main(String[] args) {
 		return number;
 	}
 	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Asks players for valid input for a country and returns said country
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static Country askPlayerForCountry (Scanner input, Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		Country country = null;
@@ -1461,6 +1520,9 @@ public static void main(String[] args) {
 		}
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Used when players are first placing armies at the beginning of the game
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void initialArmyPlacement(Player name, Country country) {
 		name.decreaseArmy(1);
 		name.addCountry(country);
@@ -1470,6 +1532,9 @@ public static void main(String[] args) {
 		country.increaseArmy(1);
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Displays countries at the beginning of the game while players are initially placing armies
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void printCountries(Continent continent1, Continent continent2, Continent continent3, 
 			Continent continent4, Continent continent5, Continent continent6) {
 		
