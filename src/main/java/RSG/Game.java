@@ -1,8 +1,11 @@
 package RSG;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
+import java.nio.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -19,6 +22,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Game {
 	private static Bot chat;
+	private static File text; 
+	private static long lastUpdate;
+	private static int currentLine;
 public static void main(String[] args) {
 	
 		//testing amazon
@@ -628,6 +634,15 @@ public static void main(String[] args) {
 	        	totalNumberOfArmyPerPlayer = 20;
 	            break;
 		}
+		text = new File("ReceivedMsg");
+		
+		clearChat(text);
+		
+		lastUpdate = text.lastModified();
+		currentLine = 1;
+		
+		
+		
 		
 		//Asks the name of all players and creates Player instances for each
 		System.out.println("Got it, " + numberOfPlayers + " players.");
@@ -636,15 +651,20 @@ public static void main(String[] args) {
 		String name;
 		sc.reset();
 		counter = 0;
-		while (sc.hasNextLine()) {
-			System.out.println("What's Player " + (counter+1) + "s name?");
-			chat.sentMessage("What's Player " + (counter+1) + "s name?");
-			name = sc.next();
+		//while (sc.hasNextLine()) 
+		for(int i= 1; i <= numberOfPlayers; i++)
+		{
+			System.out.println("What's Player " + (i) + "s name?");
+			chat.sentMessage("What's Player " + (i) + "s name?");
+			name = ReadFile(text,lastUpdate,currentLine);
+			currentLine++;
+			lastUpdate = text.lastModified();
+			//name = sc.next();
 			playerList.add(new Player(name,totalNumberOfArmyPerPlayer));
-			counter++;
-			if (counter == numberOfPlayers) {
+			//counter++;
+			/*if (counter == numberOfPlayers) {
 				break;
-			}
+			}*/
 		}		
 		
 		
@@ -655,14 +675,21 @@ public static void main(String[] args) {
 		Country selectedCountry;
 		
 		System.out.println("Let's begin!");
+		chat.sentMessage("Let's begin!");
 		System.out.println("To start, all players most place one army in a country"
+				+ "\nuntil the board is filled in turns.");
+		chat.sentMessage("To start, all players most place one army in a country"
 				+ "\nuntil the board is filled in turns.");
 		for (int x=0 ; x < numberOfPlayers ; x++) {
 			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!"
 					+ " \nYou have " + playerList.get(x).getArmy() + " armies left.");
+			chat.sentMessage("\n" + playerList.get(x).getName() + ", it's your turn!"
+					+ " \nYou have " + playerList.get(x).getArmy() + " armies left.");
 			System.out.println("\nCountries are: ");
+			chat.sentMessage("\nCountries are: ");
 			printCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 			System.out.println("\nType the country's name to place an army");
+			chat.sentMessage("\nType the country's name to place an army");
 			while (true) {
 				selectedCountry = askPlayerForCountry(sc, NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 				if (selectedCountry.hasPlayer() == false) {
@@ -693,10 +720,14 @@ public static void main(String[] args) {
 		//army onto any territory he or she already occupies.
 		
 		System.out.println("\nAll countries now have an army. Place your remaining armies in countries you own.");
+		chat.sentMessage("\nAll countries now have an army. Place your remaining armies in countries you own.");
 		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
 			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!"
 					+ " \nYou have " + playerList.get(x).getArmy() + " armies left.");
+			chat.sentMessage("\n" + playerList.get(x).getName() + ", it's your turn!"
+					+ " \nYou have " + playerList.get(x).getArmy() + " armies left.");
 			System.out.println("\nCountries are: ");
+			chat.sentMessage("\nCountries are: ");
 			printCountries(NorthAmerica, SouthAmerica, Europe, Africa, Asia, Australia);
 			System.out.println("\nType the country's name to place an army");
 			while (true) {
@@ -706,6 +737,7 @@ public static void main(String[] args) {
 				}
 				if (selectedCountry.hasPlayer() == true) {
 					System.out.println("That country is not yours, try again.");
+					chat.sentMessage("That country is not yours, try again.");
 				}
 			}
 			initialArmyPlacement(playerList.get(x), selectedCountry);
@@ -847,6 +879,60 @@ public static void main(String[] args) {
 		sc.close();
 	}
 	
+	//look at the file 
+	public static String ReadFile(File file, long lastUpdate, int lineToRead) {
+		file = new File("ReceivedMsg");
+		
+		long previousUpdate = lastUpdate;
+		long start = System.currentTimeMillis();
+		long end = start + 30000;
+		
+		
+		boolean timesUp = false;
+		
+		while(System.currentTimeMillis() < end && previousUpdate == file.lastModified()) {
+			
+		}
+		
+		if(start >= end) {
+			timesUp = true;
+		}
+		
+		if(previousUpdate == text.lastModified()) {
+			try {
+				File write = new File("ReceivedMsg");
+				FileWriter fr = new FileWriter(write, true);
+				fr.write("\n" + "1");
+				fr.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				if(timesUp == false) {
+					String txt = Files.readAllLines(Paths.get("ReceivedMsg"), Charset.defaultCharset()).get(lineToRead);
+					return txt;	
+				}
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return "1";
+	}
+
+	public static void clearChat(File text) {
+		try {
+			String newGame = "The New Game is started";
+			BufferedWriter write = new BufferedWriter(new FileWriter(text));
+			write.write(newGame);
+			write.close();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 		static class timeCheck extends TimerTask{
 			boolean timecheck;
 			
@@ -1124,6 +1210,7 @@ public static void main(String[] args) {
 		toCountry.decreaseArmy(armiesToMove);
 		player.removeUndo();
 		System.out.println(player.getName() + ", fortify has been undone!");
+		//chat.sentMessage(player.getName() + ", fortify has been undone!");
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1160,6 +1247,7 @@ public static void main(String[] args) {
 			}
 			if (!hasReturned) {
 				System.out.println("Invalid input, please try again");
+				//chat.sentMessage("Invalid input, please try again");
 			}
 		}
 	}
@@ -1180,6 +1268,7 @@ public static void main(String[] args) {
 		
 		if (player.getCards().size() < 3) {
 			System.out.println("You dont have cards to turn in.");
+			//chat.sentMessage("You dont have cards to turn in."));
 		}
 		else {
 			for (int x=0 ; x < player.getCards().size() ; x++) {
@@ -1254,6 +1343,7 @@ public static void main(String[] args) {
 					if (numberOfTurnIns < 6) {
 						total = (2+(2*numberOfTurnIns));
 						System.out.println("You got " + total + " cards from cards.");
+						//chat.sentMessage("You got " + total + " cards from cards.");
 					}
 					
 					if (numberOfTurnIns > 5) {
@@ -1262,6 +1352,7 @@ public static void main(String[] args) {
 					if (ownedCountryMatchesCard(selectedCards, player)) {
 						total = total+2;
 						System.out.println("And 2 extra cards from a matched country.");
+						//chat.sentMessage("And 2 extra cards from a matched country.");
 					}
 					
 					Arrays.sort(selectedCards);
@@ -1277,6 +1368,7 @@ public static void main(String[] args) {
 			}
 			else {
 				System.out.println("You dont have cards to turn in.");
+				//chat.sentMessage("You dont have cards to turn in.");
 			}
 		}
 		return 0;
@@ -1359,6 +1451,7 @@ public static void main(String[] args) {
 			}
 			if (firstTime == false) {
 				System.out.println("Invalid input, please try again");
+				chat.sentMessage("Invalid input, please try again");
 			}
 			firstTime = false;
 		}
@@ -1385,6 +1478,7 @@ public static void main(String[] args) {
 		
 		total = player.getCountries().size()/3;
 		System.out.println("You got " + total + " armies from countries owned.");
+		//chat.sentMessage("You got " + total + " armies from countries owned.");
 		
 		boolean continentOwned = true;
 		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
@@ -1395,6 +1489,7 @@ public static void main(String[] args) {
 		if (continentOwned == true) {
 			total = total + 5;
 			System.out.println("You got 5 from owning North America.");
+			//chat.sentMessage("You got 5 from owning North America.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
@@ -1405,6 +1500,7 @@ public static void main(String[] args) {
 		if (continentOwned == true) {
 			total = total + 2;
 			System.out.println("You got 2 from owning South America.");
+			//chat.sentMessage("You got 2 from owning South America.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
@@ -1415,6 +1511,7 @@ public static void main(String[] args) {
 		if (continentOwned == true) {
 			total = total + 5;
 			System.out.println("You got 5 from owning Europe.");
+			//chat.sentMessage("You got 5 from owning Europe.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
@@ -1425,6 +1522,7 @@ public static void main(String[] args) {
 		if (continentOwned == true) {
 			total = total + 3;
 			System.out.println("You got 3 from owning Africa");
+			//chat.sentMessage("You got 3 from owning Africa");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
@@ -1435,6 +1533,7 @@ public static void main(String[] args) {
 		if (continentOwned == true) {
 			total = total + 7;
 			System.out.println("You got 7 from owning Asia.");
+			//chat.sentMessage("You got 7 from owning Asia.");
 		}
 		continentOwned = true;
 		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
@@ -1445,6 +1544,7 @@ public static void main(String[] args) {
 		if (continentOwned == true) {
 			total = total + 2;
 			System.out.println("You got 2 from owning Australia.");
+			//chat.sentMessage("You got 2 from owning Australia.");
 		}
 		
 		return total;
@@ -1498,6 +1598,7 @@ public static void main(String[] args) {
 		while(!input.hasNextInt()) {
 		    input.next();
 		    System.out.println("Invalid input, please try again");
+		    //chat.sentMessage("Invalid input, please try again");
 		}
 		int number = input.nextInt();
 		return number;
@@ -1513,7 +1614,9 @@ public static void main(String[] args) {
 		boolean firstTime = true;
 		while (true) {
 			input.reset();
-			String line = input.nextLine();
+			//String line = input.nextLine();
+			String line = ReadFile(text,lastUpdate,currentLine);
+			lastUpdate = text.lastModified(); 
 			for (int x=0 ; x < continent1.getCountries().size() ; x++) {
 				if (line.toLowerCase().equals(continent1.getCountries().get(x).getName().toLowerCase())) {
 					country = continent1.getCountries().get(x);
@@ -1552,6 +1655,7 @@ public static void main(String[] args) {
 			}
 			if (firstTime == false) {
 				System.out.println("Invalid input, please try again");
+				chat.sentMessage("Invalid input, please try again");
 			}
 			firstTime = false;
 		}
@@ -1576,67 +1680,97 @@ public static void main(String[] args) {
 			Continent continent4, Continent continent5, Continent continent6) {
 		
 		System.out.println("\nNorth America:");
+		chat.sentMessage("\nNorth America:");
 		for (int x=0 ; x < continent1.getCountries().size() ; x++) {
 			if (continent1.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent1.getCountries().get(x).getName() + "- Unowned");
+				chat.sentMessage(continent1.getCountries().get(x).getName() + "- Unowned");
 			}
 			if (continent1.getCountries().get(x).hasPlayer() == true) {
 				System.out.println(continent1.getCountries().get(x).getName() + 
 						" -Owned by " + continent1.getCountries().get(x).getOwner().getName()
 						+ " with " + continent1.getCountries().get(x).getArmy() + " armies");
+				chat.sentMessage(continent1.getCountries().get(x).getName() + 
+						" -Owned by " + continent1.getCountries().get(x).getOwner().getName()
+						+ " with " + continent1.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("SouthAmerica:");
+		chat.sentMessage("SouthAmerica:");
 		for (int x=0 ; x < continent2.getCountries().size() ; x++) {
 			if (continent2.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent2.getCountries().get(x).getName() + "- Unowned");
+				chat.sentMessage(continent2.getCountries().get(x).getName() + "- Unowned");
 			}
 			if (continent2.getCountries().get(x).hasPlayer() == true) {
 				System.out.println(continent2.getCountries().get(x).getName() + 
 						" -Owned by " + continent2.getCountries().get(x).getOwner().getName()
 						+ " with " + continent2.getCountries().get(x).getArmy() + " armies");
+				chat.sentMessage(continent2.getCountries().get(x).getName() + 
+						" -Owned by " + continent2.getCountries().get(x).getOwner().getName()
+						+ " with " + continent2.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("Europe:");
+		chat.sentMessage("Europe:");
 		for (int x=0 ; x < continent3.getCountries().size() ; x++) {
 			if (continent3.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent3.getCountries().get(x).getName() + "- Unowned");
+				chat.sentMessage(continent3.getCountries().get(x).getName() + "- Unowned");
 			}
 			if (continent3.getCountries().get(x).hasPlayer() == true) {
 				System.out.println(continent3.getCountries().get(x).getName() + 
 						" -Owned by " + continent3.getCountries().get(x).getOwner().getName()
 						+ " with " + continent3.getCountries().get(x).getArmy() + " armies");
+				chat.sentMessage(continent3.getCountries().get(x).getName() + 
+						" -Owned by " + continent3.getCountries().get(x).getOwner().getName()
+						+ " with " + continent3.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("Africa:");
+		chat.sentMessage("Africa:");
 		for (int x=0 ; x < continent4.getCountries().size() ; x++) {
 			if (continent4.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent4.getCountries().get(x).getName() + "- Unowned");
+				chat.sentMessage(continent4.getCountries().get(x).getName() + "- Unowned");
 			}
 			if (continent4.getCountries().get(x).hasPlayer() == true) {
 				System.out.println(continent4.getCountries().get(x).getName() + 
 						" -Owned by " + continent4.getCountries().get(x).getOwner().getName()
 						+ " with " + continent4.getCountries().get(x).getArmy() + " armies");
+				chat.sentMessage(continent4.getCountries().get(x).getName() + 
+						" -Owned by " + continent4.getCountries().get(x).getOwner().getName()
+						+ " with " + continent4.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("Asia:");
+		chat.sentMessage("Asia:");
 		for (int x=0 ; x < continent5.getCountries().size() ; x++) {
 			if (continent5.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent5.getCountries().get(x).getName() + "- Unowned");
+				chat.sentMessage(continent5.getCountries().get(x).getName() + "- Unowned");
 			}
 			if (continent5.getCountries().get(x).hasPlayer() == true) {
 				System.out.println(continent5.getCountries().get(x).getName() + 
 						" -Owned by " + continent5.getCountries().get(x).getOwner().getName()
 						+ " with " + continent5.getCountries().get(x).getArmy() + " armies");
+				chat.sentMessage(continent5.getCountries().get(x).getName() + 
+						" -Owned by " + continent5.getCountries().get(x).getOwner().getName()
+						+ " with " + continent5.getCountries().get(x).getArmy() + " armies");
 			}
 		}
 		System.out.println("Australia:");
+		chat.sentMessage("Australia:");
 		for (int x=0 ; x < continent6.getCountries().size() ; x++) {
 			if (continent6.getCountries().get(x).hasPlayer() == false) {
 				System.out.println(continent6.getCountries().get(x).getName() + "- Unowned");
+				chat.sentMessage(continent6.getCountries().get(x).getName() + "- Unowned");
 			}
 			if (continent6.getCountries().get(x).hasPlayer() == true) {
 				System.out.println(continent6.getCountries().get(x).getName() + 
+						" -Owned by " + continent6.getCountries().get(x).getOwner().getName()
+						+ " with " + continent6.getCountries().get(x).getArmy() + " armies");
+				chat.sentMessage(continent6.getCountries().get(x).getName() + 
 						" -Owned by " + continent6.getCountries().get(x).getOwner().getName()
 						+ " with " + continent6.getCountries().get(x).getArmy() + " armies");
 			}
@@ -1662,6 +1796,7 @@ public static void main(String[] args) {
 		        if( str.equals("") )
 		        {
 		            System.out.println( "Time's up! This part of your turn is skipped." );
+		            //chat.sentMessage("Time's up! This part of your turn is skipped." );
 		        }
 		        isTimeUp = true;
 		    }  
@@ -1688,6 +1823,7 @@ public static void main(String[] args) {
 				}
 				else  {
 					System.out.println("Invalid input, please try again");
+					//chat.sentMessage("Invalid input, please try again");
 				}
 				firstTime=false;
 			}
