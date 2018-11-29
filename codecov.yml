@@ -2,16 +2,3 @@ coverage:
   precision: 2
   round: nearest
   range: "20...80"
-  ignore: 
-     - "SD_RiskGame/src/main/java/RSG/Bot.java"
-     - "SD_RiskGame/src/main/java/RSG/Card.java"
-     - "SD_RiskGame/src/main/java/RSG/Continent.java"
-     - "SD_RiskGame/src/main/java/RSG/Dice.java"
-     - "SD_RiskGame/src/main/java/RSG/Game.java"
-     - "SD_RiskGame/src/main/java/RSG/Observer.java"
-     - "SD_RiskGame/src/main/java/RSG/Player.java"
-     - "SD_RiskGame/src/main/java/RSG/S3.java"
-     - "SD_RiskGame/src/main/java/RSG/TwitterRG.java"
-     - "SD_RiskGame/src/main/java/RSG/botTwo.java"
-     - "SD_RiskGame/src/main/java/RSG/botThree.java"
-     - "SD_RiskGame/src/main/java/RSG/botgroup.java"
