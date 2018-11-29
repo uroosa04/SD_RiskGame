@@ -28,15 +28,20 @@ public static void main(String[] args) {
 		*/
 	
 		//testing timer
-		
+		/*
 		Scanner in = new Scanner(System.in);
 		System.out.println("Y or N (You have 5 seconds to answer)");
 		boolean answer = askPlayerForYesOrNoTest(in);
 		System.out.println("Your answer: " + answer);
-	 	
+	 	*/
 	
 		//testing Twitter
-		
+		/*
+		TwitterRG newTwitterAcc = new TwitterRG();
+		newTwitterAcc.establishTwitterConnection(newTwitterAcc.getSecretData());
+		newTwitterAcc.updateTweet("Gio camptured Peru and Argentina");
+		System.out.println("This is a test");
+		*/
 	
 		///////////////////////////////////////////////////////////////////////////////////
 		/////// Initializes everything in the game
