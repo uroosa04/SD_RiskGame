@@ -22,8 +22,21 @@ public class Game {
 public static void main(String[] args) {
 	
 		//testing amazon
-		//S3 uploader = new S3();
-		//uploader.upload();
+		/*
+		S3 uploader = new S3();
+		uploader.upload();
+		*/
+	
+		//testing timer
+		/*
+		Scanner in = new Scanner(System.in);
+		System.out.println("Y or N (You have 5 seconds to answer)");
+		boolean answer = askPlayerForYesOrNoTest(in);
+		System.out.println("Your answer: " + answer);
+	 	*/
+	
+		//testing Twitter
+		
 	
 		///////////////////////////////////////////////////////////////////////////////////
 		/////// Initializes everything in the game
@@ -621,7 +634,6 @@ public static void main(String[] args) {
 		while (sc.hasNextLine()) {
 			System.out.println("What's Player " + (counter+1) + "s name?");
 			chat.sentMessage("What's Player " + (counter+1) + "s name?");
-			
 			name = sc.next();
 			playerList.add(new Player(name,totalNumberOfArmyPerPlayer));
 			counter++;
@@ -726,15 +738,6 @@ public static void main(String[] args) {
 		for (int x=indexHelper ; x < numberOfPlayers ; x++) {
 			System.out.println("\n" + playerList.get(x).getName() + ", it's your turn!");
 			
-			//Set timer for player to have 30 second on each move. 
-			Timer time = new Timer();
-			
-			time.schedule(new timeCheck(),0,30*1000);
-			//playerIndex = x;
-			
-			//long start = System.currentTimeMillis();
-			
-			//while (System.currentTimeMillis() - start < 30) {
 			
 			//Credits
 			System.out.println("Do you want to buy, use, or transfer credits?");
@@ -1336,7 +1339,7 @@ public static void main(String[] args) {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static boolean askPlayerForYesOrNo(Scanner input) {
 		boolean firstTime = true;
-
+		
 		while (true) {
 			input.reset();
 
@@ -1634,6 +1637,73 @@ public static void main(String[] args) {
 			}
 		}
 		
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// Asks players for valid yes or no and returns a boolean
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	static boolean isTimeUp = false;
+	public static boolean askPlayerForYesOrNoTest(Scanner input) {
+		
+		String str = "";
+		boolean firstTime = true;
+		
+		
+		TimerTask task = new TimerTask()
+		{
+			@Override
+		    public void run()
+		    {
+		        if( str.equals("") )
+		        {
+		            System.out.println( "Time's up! This part of your turn is skipped." );
+		        }
+		        isTimeUp = true;
+		    }  
+		};
+		
+		Timer timer = new Timer();
+
+		isTimeUp = false;
+		timer.schedule( task, 5*1000 );
+
+		input.reset();
+		String line = input.nextLine();
+		if (!isTimeUp) {
+			
+			if (line.toLowerCase().equals("y")) {
+				timer.cancel();
+				return true;
+			}
+		
+			if (line.toLowerCase().equals("n")) {
+				timer.cancel();
+				return false;
+			}
+			if (firstTime == false) {
+				System.out.println("Invalid input, please try again");
+			}
+		}
+		
+		
+		return false;
+	    
+	    /*
+		while (true) {
+			input.reset();
+			String line = input.nextLine();
+			if (line.toLowerCase().equals("y")) {
+				return true;
+			}
+		
+			if (line.toLowerCase().equals("n")) {
+				return false;
+			}
+			if (firstTime == false) {
+				System.out.println("Invalid input, please try again");
+			}
+			firstTime = false;
+		}*/
 	}
 	
 }
