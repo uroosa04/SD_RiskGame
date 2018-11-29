@@ -1,5 +1,8 @@
 package RSG;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -18,7 +21,10 @@ public class Game {
 	private static Bot chat;
 public static void main(String[] args) {
 	
-		
+		//testing amazon
+		//S3 uploader = new S3();
+		//uploader.upload();
+	
 		///////////////////////////////////////////////////////////////////////////////////
 		/////// Initializes everything in the game
 		///////    Creates countries and loads them into their continents
@@ -546,6 +552,7 @@ public static void main(String[] args) {
 		List<Player> playerList = new ArrayList<Player>(); //Array list with players name in turn order
 		int totalNumberOfArmyPerPlayer = 0; //The number of armies per player decided by game rules and total players
 		int numberOfTurnIns = 1;
+		S3 uploader = new S3();
 		
 		
 		//Game starts and asks the amount of players
@@ -809,7 +816,11 @@ public static void main(String[] args) {
 			if (playerList.get(x).getCountries().size() == 42) {
 				x = numberOfPlayers;
 				System.out.println("Congratulations " + playerList.get(x).getName() + ", you won the game!");
+				uploader.upload();
 			}
+			
+			writeGameToFile(playerList.get(x));
+			
 			if (x == numberOfPlayers - 1) {
 				x = -1;
 			}
@@ -842,6 +853,22 @@ public static void main(String[] args) {
 				}
 			}
 		}
+		
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///// This function adds to the file 'game.txt' the amount of countries the player has that turn.
+	///// At the end of the game, the file is handles by amazon web services.
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	public static void writeGameToFile(Player player) {
+		try {
+			@SuppressWarnings("resource")
+			BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/guillermo/Documents/SD_RiskGame/game.txt"));
+			writer.append(player + " has " + player.getCountries().size() + " countries." + '\n');
+		}
+		catch(Exception e){
+            System.out.println("File Error");
+        }
+		
+	}
 		
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///// The credit function asks the player if they want to buy, use, or transfer credits, and does the 
