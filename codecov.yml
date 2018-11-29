@@ -6,7 +6,6 @@ coverage:
      - "SD_RiskGame/src/main/java/RSG/Bot.java"
      - "SD_RiskGame/src/main/java/RSG/Card.java"
      - "SD_RiskGame/src/main/java/RSG/Continent.java"
-     - "SD_RiskGame/src/main/java/RSG/Country.java"
      - "SD_RiskGame/src/main/java/RSG/Dice.java"
      - "SD_RiskGame/src/main/java/RSG/Game.java"
      - "SD_RiskGame/src/main/java/RSG/Observer.java"
