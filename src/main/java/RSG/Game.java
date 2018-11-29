@@ -45,8 +45,7 @@ public static void main(String[] args) {
 		/*
 		TwitterRG newTwitterAcc = new TwitterRG();
 		newTwitterAcc.establishTwitterConnection(newTwitterAcc.getSecretData());
-		newTwitterAcc.updateTweet("Gio camptured Peru and Argentina");
-		System.out.println("This is a test");
+		newTwitterAcc.updateTweet("Gio captured Alaska and Ontario!");
 		*/
 	
 		///////////////////////////////////////////////////////////////////////////////////
@@ -583,6 +582,7 @@ public static void main(String[] args) {
 		System.out.println("Welcome to RISK!");
 		System.out.println("How many players? (2, 3, 4, 5, or 6)");
 		numberOfPlayers = askPlayerForInt(sc);
+		String countriesCaptured = "";
 		while (numberOfPlayers < 2 || numberOfPlayers > 6) {
 			System.out.println("Please input an appropiate number of players. (2, 3, 4, 5, or 6)");
 			numberOfPlayers = askPlayerForInt(sc);
@@ -610,8 +610,8 @@ public static void main(String[] args) {
 		
 		
 		//connect Twitter to game
-		//TwitterRG newTwitterAcc = new TwitterRG();
-		//newTwitterAcc.establishTwitterConnection(newTwitterAcc.getSecretData());
+		TwitterRG newTwitterAcc = new TwitterRG();
+		newTwitterAcc.establishTwitterConnection(newTwitterAcc.getSecretData());
 		
 		
 		
@@ -859,13 +859,18 @@ public static void main(String[] args) {
 				uploader.upload();
 			}
 			
+			//Twitter Post
+			String stringForTwitter = "";
+			stringForTwitter = playerList.get(x) + " captured " + countriesCaptured;
+			newTwitterAcc.updateTweet(stringForTwitter);
+			
+			//Writes to the file to save in AWS bucket.
 			writeGameToFile(playerList.get(x));
 			
 			if (x == numberOfPlayers - 1) {
 				x = -1;
 			}
-			//post a Tweet after every turn
-			//newTwitterAcc.updateTweet(playerList.get(x).getName() + " now has " + playerList.get(x).numOfCountriesHeld() + " territories!"); 
+			 
 		}
 		//}
 		
