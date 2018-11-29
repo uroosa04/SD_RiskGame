@@ -28,12 +28,12 @@ public static void main(String[] args) {
 		*/
 	
 		//testing timer
-		/*
+		
 		Scanner in = new Scanner(System.in);
 		System.out.println("Y or N (You have 5 seconds to answer)");
 		boolean answer = askPlayerForYesOrNoTest(in);
 		System.out.println("Your answer: " + answer);
-	 	*/
+	 	
 	
 		//testing Twitter
 		
@@ -1667,26 +1667,28 @@ public static void main(String[] args) {
 		isTimeUp = false;
 		timer.schedule( task, 5*1000 );
 
-		input.reset();
-		String line = input.nextLine();
-		if (!isTimeUp) {
+		while(true) {
+			input.reset();
+			String line = input.nextLine();
+			if (!isTimeUp) {
+				
+				if (line.toLowerCase().equals("y")) {
+					timer.cancel();
+					return true;
+				}
 			
-			if (line.toLowerCase().equals("y")) {
-				timer.cancel();
-				return true;
-			}
-		
-			if (line.toLowerCase().equals("n")) {
-				timer.cancel();
-				return false;
-			}
-			if (firstTime == false) {
-				System.out.println("Invalid input, please try again");
+				else if (line.toLowerCase().equals("n")) {
+					timer.cancel();
+					return false;
+				}
+				else  {
+					System.out.println("Invalid input, please try again");
+				}
+				firstTime=false;
 			}
 		}
 		
-		
-		return false;
+		//return false;
 	    
 	    /*
 		while (true) {
