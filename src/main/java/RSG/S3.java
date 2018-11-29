@@ -22,7 +22,7 @@ public class S3 {
 	
 	public static String getKey() {
 		try {
-			Scanner sc = new Scanner(new File("/Users/guillermo/Documents/SD_RiskGame/AWSAPIdata.properties"));
+			Scanner sc = new Scanner(new File("/Users/guillermo/Documents/AWSCredentials.properties"));
 	        return sc.nextLine();
 		}
 		catch(Exception e){
@@ -33,7 +33,7 @@ public class S3 {
 	
 	public static String getPrivateKey() {
 		try {
-			Scanner sc = new Scanner(new File("/Users/guillermo/Documents/SD_RiskGame/AWSAPIdata.properties"));
+			Scanner sc = new Scanner(new File("/Users/guillermo/Documents/AWSCredentials.properties"));
 			sc.nextLine();
 	        return sc.nextLine();
 		}
