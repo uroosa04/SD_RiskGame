@@ -4,6 +4,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Bot extends TelegramLongPollingBot {
 	
@@ -57,9 +58,6 @@ public class Bot extends TelegramLongPollingBot {
         	}
     }
     
-    
-    
-    
     public void sentMessage(String message) {
     	SendMessage msg = new SendMessage()
     			.setChatId("-273082351")
@@ -85,4 +83,5 @@ public class Bot extends TelegramLongPollingBot {
         //TO TA's, the API key has not been posted here to keep is confidential. You may request this through email.
         return "736188520:AAF8ADMS7Ph2ZJMxbWq7yp4YxpGQipFge5M";
     }
+
 }
