@@ -83,5 +83,4 @@ public class Bot extends TelegramLongPollingBot {
         //TO TA's, the API key has not been posted here to keep is confidential. You may request this through email.
         return "736188520:AAF8ADMS7Ph2ZJMxbWq7yp4YxpGQipFge5M";
     }
-
 }
