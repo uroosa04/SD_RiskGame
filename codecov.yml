@@ -5,3 +5,11 @@ coverage:
 
 codecov:
   token: e01e533a-2c04-479c-ad31-c61e6de62e52
+ignore:
+  - "src/main/Bot.java"
+  - "src/main/Game.java"
+  - "src/main/Observer.java"
+  - "src/main/Player.java"
+  - "src/main/S3.java"
+  - "src/main/TwitterRG.java"
+  
