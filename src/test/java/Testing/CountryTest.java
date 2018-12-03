@@ -1,4 +1,4 @@
-package RSG;
+package Testing;
 
 import static org.junit.Assert.*;
 import RSG.Country;
