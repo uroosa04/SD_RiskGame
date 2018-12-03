@@ -22,4 +22,3 @@ public class Dice {
 		this.outcome = num;
 	}
 }
-

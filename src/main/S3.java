@@ -13,7 +13,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 public class S3 {
-S3(){}
+	
+	S3(){}
 	
 	static String bucketName = "riskgame";
 	static String fileName = "UploadedGame";
