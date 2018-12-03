@@ -1,11 +1,12 @@
-package RSG;
+package TestCase;
 
 import static org.junit.Assert.*;
 import RSG.Country;
 import org.junit.Test;
 import RSG.Player;
-public class CountryTest {
-	Country test = new Country("Japan");
+
+public class TestCountry {
+Country test = new Country("Japan");
 	
 	@Test
 	public void countryMade() {

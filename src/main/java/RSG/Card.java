@@ -1,6 +1,5 @@
 package RSG;
 
-
 public class Card {
 	//Game Rules regarding cards:
 		//
