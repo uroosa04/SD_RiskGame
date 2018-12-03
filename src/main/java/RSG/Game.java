@@ -1,6 +1,5 @@
 package RSG;
 import java.io.*;
-import java.nio.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,7 +10,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
 
-import java.util.*;
 
 import java.util.Timer;
 import java.util.TimerTask;

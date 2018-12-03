@@ -1,12 +1,12 @@
-package RSG;
-package Testing;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 import RSG.Card;
 import RSG.Country;
-public class CardTest {
+
+
+public class CardTest extends TestCase {
 	Country testC = new Country("India");
 	Card test = new Card("Infantry", testC);
 	@Test
