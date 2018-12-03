@@ -1,5 +1,5 @@
 package TestCase;
-
+package RSG;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import RSG.Country;
