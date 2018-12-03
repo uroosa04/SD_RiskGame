@@ -50,6 +50,9 @@ public class Player implements Observer {
 		countriesHeld.remove(country);
 	}
 	
+	public void setArmy(int num){
+		army = num;
+	}
 	public int getArmy() {
 		return army;
 	}
@@ -77,6 +80,9 @@ public class Player implements Observer {
 	}
 	public int getCredits() {
 		return credits;
+	}
+	public void setCredits(int num) {
+		credits = num;
 	}
 	public void addUndo() {
 		undo++;
