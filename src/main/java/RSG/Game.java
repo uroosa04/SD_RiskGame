@@ -1,5 +1,6 @@
 package RSG;
 import java.io.*;
+import java.nio.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
 
+import java.util.*;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -945,7 +947,7 @@ public static void main(String[] args) {
 		}
 	}
 
-		static class timeCheck extends TimerTask{
+		/*static class timeCheck extends TimerTask{
 			boolean timecheck;
 			
 			public timeCheck() {
@@ -958,7 +960,7 @@ public static void main(String[] args) {
 					cancel();
 				}
 			}
-		}
+		}*/
 		
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///// This function adds to the file 'game.txt' the amount of countries the player has that turn.

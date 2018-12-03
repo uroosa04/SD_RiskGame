@@ -4,11 +4,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.*;
-import java.util.ArrayList;
 
-public class Bot extends TelegramLongPollingBot {
-	
-    @Override
+public class Bot extends TelegramLongPollingBot{
+	@Override
     public void onUpdateReceived(Update update) {
     	// We check if the update has a message and the message has text
     	
@@ -37,7 +35,6 @@ public class Bot extends TelegramLongPollingBot {
         }*/
     }
 
-   
     public void ReceivedMsg(String msg) {
     	
     	
