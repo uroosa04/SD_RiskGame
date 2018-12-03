@@ -2,3 +2,8 @@ coverage:
   precision: 2
   round: nearest
   range: "0...100"
+ignore:
+  - "src/main/Bot.java"
+  - "src/main/TwitterRG.java"
+  - "src/main/S3.java"
+  - "src/main/Game.java"
